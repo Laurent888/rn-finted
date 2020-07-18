@@ -7,6 +7,12 @@
     "noEmit": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "strict": true
+    "strict": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@routeTypes": ["./navigation/routeTypes.ts"],
+      "@theme": ["./style/theme.ts"],
+      "@screens/*": ["./screens/*"]
+    }
   }
 }
