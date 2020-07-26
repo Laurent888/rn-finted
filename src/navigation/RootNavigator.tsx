@@ -8,11 +8,26 @@ import { TabNavigator } from "@routeTypes";
 import HomeNavigator from "./BottomTab/HomeNavigator";
 import ProfileNavigator from "./BottomTab/ProfileNavigator";
 import SellNavigator from "./BottomTab/SellNavigator";
+import { useQuery } from "@apollo/client";
+import { IS_LOGGED_IN } from "@constants/queries";
+import { NavigationHelpersContext } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 
 const RootNavigator = () => {
   const t = useTheme();
+
+  const { data } = useQuery(IS_LOGGED_IN);
+
+  const listenersTab = ({ navigation }) => ({
+    tabPress: (e) => {
+      e.preventDefault();
+      if (!data.isLoggedIn) {
+        navigation.navigate("loginModal");
+      }
+    },
+  });
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -59,11 +74,13 @@ const RootNavigator = () => {
         name={TabNavigator.INBOX_TAB}
         component={HomeNavigator}
         options={{ tabBarLabel: "Inbox" }}
+        listeners={listenersTab}
       />
       <Tab.Screen
         name={TabNavigator.PROFILE_TAB}
         component={ProfileNavigator}
         options={{ tabBarLabel: "Profile" }}
+        listeners={listenersTab}
       />
     </Tab.Navigator>
   );

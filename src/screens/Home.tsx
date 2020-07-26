@@ -5,6 +5,7 @@ import { Button, TextInput, useTheme } from "react-native-paper";
 export default function Home() {
   const [value, setValue] = useState("");
   const t = useTheme();
+
   return (
     <View
       style={{

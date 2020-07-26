@@ -12,7 +12,8 @@
     "paths": {
       "@routeTypes": ["./navigation/routeTypes.ts"],
       "@theme": ["./style/theme.ts"],
-      "@screens/*": ["./screens/*"]
+      "@screens/*": ["./screens/*"],
+      "@constants/*": ["./constant/*"]
     }
   }
 }

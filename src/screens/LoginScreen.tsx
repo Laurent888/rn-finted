@@ -1,14 +1,40 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, AsyncStorage } from "react-native";
 import { Formik, Field } from "formik";
 import * as Yup from "yup";
-import { Screens } from "@routeTypes";
+import { Screens, TabNavigator } from "@routeTypes";
+import { useMutation } from "@apollo/client";
+import theme from "@theme";
+import { LOGIN } from "@constants/queries";
 
+import { isLoggedInVar } from "../lib/apollo";
 import Button from "../components/common/Button";
 import InputField from "../components/common/InputField";
-import theme from "@theme";
 
 const LoginScreen = ({ navigation }) => {
+  useEffect(() => {
+    navigation.setOptions({
+      title: "Log in",
+    });
+  }, []);
+
+  const [errorMsg, setErrorMsg] = useState<null | string>(null);
+
+  const [loginUser, { loading, error }] = useMutation(LOGIN, {
+    onCompleted: async ({ login }) => {
+      await AsyncStorage.setItem("TOKEN", login as string);
+      isLoggedInVar(true);
+      navigation.goBack();
+    },
+    onError(error) {
+      setErrorMsg(error.message);
+
+      setTimeout(() => {
+        setErrorMsg(null);
+      }, 4000);
+    },
+  });
+
   const initialValues = {
     email: "",
     password: "",
@@ -25,10 +51,21 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={s.container}>
+      {errorMsg && (
+        <View style={s.errorContainer}>
+          <Text style={s.errorMsg}>{errorMsg}</Text>
+        </View>
+      )}
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={async (values) => {
+          const token = await loginUser({
+            variables: { email: values.email, password: values.password },
+          });
+
+          console.log(token, "IN LOGIN PAGE");
+        }}
       >
         {({
           handleChange,
@@ -87,5 +124,16 @@ const s = StyleSheet.create({
   },
   input: {
     marginBottom: 20,
+  },
+  errorContainer: {
+    alignItems: "center",
+    marginVertical: 15,
+  },
+  errorMsg: {
+    color: theme.colors.error,
+    backgroundColor: "rgba(147,36,36,0.20)",
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    textTransform: "capitalize",
   },
 });

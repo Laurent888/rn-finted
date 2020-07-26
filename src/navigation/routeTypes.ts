@@ -15,4 +15,7 @@ export enum Screens {
   SELL = "sell",
   SEARCH = "search",
   INBOX = "inbox",
+  PROFILE = "profile",
+  SETTINGS = "settings",
+  LOGIN_HOME = "loginHome",
 }

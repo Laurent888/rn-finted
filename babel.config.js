@@ -22,6 +22,7 @@ module.exports = function (api) {
             "@routeTypes": "./src/navigation/routeTypes.ts",
             "@theme": "./src/style/theme.ts",
             "@screens": "./src/screens",
+            "@constants": "./src/constant",
           },
         },
       ],

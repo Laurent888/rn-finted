@@ -1,6 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
+
 import RootNavigator from "./RootNavigator";
 import LoginNavigator from "./LoginNavigator";
 
@@ -11,11 +12,15 @@ const AppStack = () => {
     <NavigationContainer>
       <Stack.Navigator mode="modal">
         <Stack.Screen
-          name="AppStack"
+          name="root"
           component={RootNavigator}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="loginModal" component={LoginNavigator} />
+        <Stack.Screen
+          name="loginModal"
+          component={LoginNavigator}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

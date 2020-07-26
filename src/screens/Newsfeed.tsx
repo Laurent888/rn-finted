@@ -1,6 +1,9 @@
 import React from "react";
 import { StyleSheet, View, FlatList } from "react-native";
+
 import ItemCard from "../components/common/ItemCard";
+import { useQuery } from "@apollo/client";
+import { GET_ME, GET_USERS } from "../constant/queries";
 
 const mockData = [
   {
@@ -24,6 +27,8 @@ const mockData = [
 ];
 
 const Newsfeed = ({ navigation }) => {
+  const { data, error } = useQuery(GET_USERS);
+  console.log("NEWSFEED", data);
   return (
     <View style={{ backgroundColor: "#fff" }}>
       <FlatList
