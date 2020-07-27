@@ -10,10 +10,17 @@ const typeDefs = gql`
 
   type Listing {
     id: ID!
-    name: String
+    title: String
     description: String
     price: Int
-    owner: User!
+    owner: ID!
+  }
+
+  input CreateListingInput {
+    title: String!
+    price: Int!
+    description: String!
+    owner: ID!
   }
 
   type Query {
@@ -29,6 +36,8 @@ const typeDefs = gql`
     login(email: String, password: String): String
     createUser(email: String, password: String, username: String): String
     deleteUser(id: ID): String
+    createListing(newListing: CreateListingInput): Listing
+    deleteListing(id: ID): String
   }
 `;
 

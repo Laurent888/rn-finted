@@ -12,26 +12,6 @@ const Stack = createStackNavigator();
 const SellNavigator = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
-  const { data, loading, error } = useQuery(
-    gql`
-      query {
-        me
-      }
-    `,
-    {
-      onCompleted(me) {
-        console.log(me);
-      },
-    }
-  );
-
-  if (loading)
-    return (
-      <View>
-        <Text>Loading</Text>
-      </View>
-    );
-
   return (
     <Stack.Navigator>
       {isLoggedIn ? (

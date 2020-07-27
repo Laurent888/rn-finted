@@ -3,14 +3,13 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 import { useTheme } from "react-native-paper";
 
-import { TabNavigator } from "@routeTypes";
+import { TabNavigator, Screens } from "@routeTypes";
 
 import HomeNavigator from "./BottomTab/HomeNavigator";
 import ProfileNavigator from "./BottomTab/ProfileNavigator";
 import SellNavigator from "./BottomTab/SellNavigator";
 import { useQuery } from "@apollo/client";
 import { IS_LOGGED_IN } from "@constants/queries";
-import { NavigationHelpersContext } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 
@@ -19,11 +18,15 @@ const RootNavigator = () => {
 
   const { data } = useQuery(IS_LOGGED_IN);
 
-  const listenersTab = ({ navigation }) => ({
+  const listenersTab = (navigation, tab, screen) => ({
     tabPress: (e) => {
       e.preventDefault();
       if (!data.isLoggedIn) {
         navigation.navigate("loginModal");
+      } else {
+        navigation.navigate(tab, {
+          screen,
+        });
       }
     },
   });
@@ -74,13 +77,17 @@ const RootNavigator = () => {
         name={TabNavigator.INBOX_TAB}
         component={HomeNavigator}
         options={{ tabBarLabel: "Inbox" }}
-        listeners={listenersTab}
+        listeners={({ navigation }) =>
+          listenersTab(navigation, TabNavigator.HOME_TAB, Screens.HOME)
+        }
       />
       <Tab.Screen
         name={TabNavigator.PROFILE_TAB}
         component={ProfileNavigator}
         options={{ tabBarLabel: "Profile" }}
-        listeners={listenersTab}
+        listeners={({ navigation }) =>
+          listenersTab(navigation, TabNavigator.PROFILE_TAB, Screens.PROFILE)
+        }
       />
     </Tab.Navigator>
   );

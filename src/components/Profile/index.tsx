@@ -7,9 +7,9 @@ import {
   ScrollView,
 } from "react-native";
 import { Avatar } from "react-native-paper";
-import { useQuery } from "@apollo/client";
+import { useQuery, useApolloClient } from "@apollo/client";
 import theme from "@theme";
-import { GET_ME } from "@constants/queries";
+import { GET_ME, IS_LOGGED_IN, GET_CURRENT_USER } from "@constants/queries";
 import { useNavigation } from "@react-navigation/native";
 
 import ButtonWide from "../../components/common/ButtonWide";
@@ -18,14 +18,27 @@ import Error from "../../components/common/Error";
 import { Screens } from "@routeTypes";
 
 const Profile = () => {
-  const { data, loading, error } = useQuery(GET_ME);
+  const client = useApolloClient();
+  const { data, loading, error } = useQuery(GET_ME, {
+    fetchPolicy: "network-only",
+  });
+
   const n = useNavigation();
 
   if (loading) return <LoadingIndicator />;
   if (error) return <Error error={error} />;
 
   const { me } = data;
-
+  client.writeQuery({
+    query: GET_CURRENT_USER,
+    data: {
+      getCurrentUser: {
+        email: me.email,
+        id: me.id,
+        username: me.username,
+      },
+    },
+  });
   console.log(me, "IN PROFILE");
   return (
     <ScrollView>

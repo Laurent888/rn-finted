@@ -5,24 +5,28 @@ import {
   ApolloLink,
   makeVar,
   HttpLink,
-  from,
 } from "@apollo/client";
 import { onError } from "@apollo/link-error";
 import { setContext } from "@apollo/link-context";
 import { AsyncStorage } from "react-native";
+import { IS_LOGGED_IN, GET_CURRENT_USER } from "@constants/queries";
 
-export const isLoggedInVar = makeVar(false);
+const cache = new InMemoryCache();
 
-const cache = new InMemoryCache({
-  typePolicies: {
-    Query: {
-      fields: {
-        isLoggedIn: {
-          read() {
-            return isLoggedInVar();
-          },
-        },
-      },
+cache.writeQuery({
+  query: IS_LOGGED_IN,
+  data: {
+    isLoggedIn: false,
+  },
+});
+
+cache.writeQuery({
+  query: GET_CURRENT_USER,
+  data: {
+    getCurrentUser: {
+      id: "",
+      email: "",
+      username: "",
     },
   },
 });
@@ -43,9 +47,14 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const authLink = setContext(async (_, { headers }) => {
   const token = await AsyncStorage.getItem("TOKEN");
-
+  console.log(token, "IN AUTH LINK");
   if (token) {
-    isLoggedInVar(true);
+    cache.writeQuery({
+      query: IS_LOGGED_IN,
+      data: {
+        isLoggedIn: true,
+      },
+    });
   }
 
   return {
@@ -62,6 +71,6 @@ const httpLink = new HttpLink({
 });
 
 export const client = new ApolloClient({
-  link: from([errorLink, authLink, httpLink]),
+  link: ApolloLink.from([errorLink, authLink, httpLink]),
   cache,
 });

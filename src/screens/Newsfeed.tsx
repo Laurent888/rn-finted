@@ -1,9 +1,19 @@
 import React from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList, AsyncStorage } from "react-native";
 
 import ItemCard from "../components/common/ItemCard";
-import { useQuery } from "@apollo/client";
-import { GET_ME, GET_USERS } from "../constant/queries";
+import { useQuery, useApolloClient, ApolloClient } from "@apollo/client";
+import {
+  GET_ME,
+  GET_USERS,
+  IS_LOGGED_IN,
+  CART_ITEMS,
+  GET_CURRENT_USER,
+} from "../constant/queries";
+import { Button } from "react-native-paper";
+import { logout } from "../lib/utils";
+import { useLinkProps, StackActions } from "@react-navigation/native";
+import { Screens, TabNavigator } from "@routeTypes";
 
 const mockData = [
   {
@@ -27,10 +37,34 @@ const mockData = [
 ];
 
 const Newsfeed = ({ navigation }) => {
-  const { data, error } = useQuery(GET_USERS);
-  console.log("NEWSFEED", data);
+  const client: ApolloClient<any> = useApolloClient();
+  const { data, loading, error } = useQuery(IS_LOGGED_IN);
+  const { data: data1 } = useQuery(GET_CURRENT_USER);
   return (
     <View style={{ backgroundColor: "#fff" }}>
+      <Button
+        onPress={async () => {
+          const res = await AsyncStorage.getItem("TOKEN");
+          console.log(data, res, "TEST");
+          console.log(data1, "USER IN CACHE");
+        }}
+      >
+        Test
+      </Button>
+      <Button
+        onPress={() => {
+          logout();
+          client.writeQuery({
+            query: IS_LOGGED_IN,
+            data: {
+              isLoggedIn: false,
+            },
+          });
+        }}
+      >
+        DELETE CACHE
+      </Button>
+
       <FlatList
         data={mockData}
         keyExtractor={(item) => item.id.toString()}

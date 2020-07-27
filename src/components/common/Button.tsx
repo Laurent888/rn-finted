@@ -8,9 +8,17 @@ interface Props {
   style?: any;
   mode?: "text" | "outlined" | "contained" | undefined;
   onPress?: () => void;
+  disabled?: boolean;
 }
 
-const Button = ({ children, mode, style, onPress, ...rest }: Props) => {
+const Button = ({
+  children,
+  mode,
+  style,
+  onPress,
+  disabled,
+  ...rest
+}: Props) => {
   return (
     <ButtonPaper
       {...rest}
@@ -20,6 +28,7 @@ const Button = ({ children, mode, style, onPress, ...rest }: Props) => {
         color: mode === "contained" ? "#fff" : theme.colors.primary,
       }}
       onPress={onPress}
+      disabled={disabled}
     >
       {children}
     </ButtonPaper>

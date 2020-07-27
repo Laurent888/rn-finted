@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, AsyncStorage } from "react-native";
-import { Formik, Field } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
-import { Screens, TabNavigator } from "@routeTypes";
-import { useMutation } from "@apollo/client";
+import { useMutation, useApolloClient, ApolloClient } from "@apollo/client";
 import theme from "@theme";
-import { LOGIN } from "@constants/queries";
+import { LOGIN, IS_LOGGED_IN } from "@constants/queries";
 
-import { isLoggedInVar } from "../lib/apollo";
 import Button from "../components/common/Button";
 import InputField from "../components/common/InputField";
+import { TabNavigator, Screens } from "@routeTypes";
 
 const LoginScreen = ({ navigation }) => {
   useEffect(() => {
@@ -18,17 +17,26 @@ const LoginScreen = ({ navigation }) => {
     });
   }, []);
 
+  const client: ApolloClient<any> = useApolloClient();
   const [errorMsg, setErrorMsg] = useState<null | string>(null);
 
   const [loginUser, { loading, error }] = useMutation(LOGIN, {
     onCompleted: async ({ login }) => {
+      console.log("FROM LOGIN");
       await AsyncStorage.setItem("TOKEN", login as string);
-      isLoggedInVar(true);
-      navigation.goBack();
+      client.writeQuery({
+        query: IS_LOGGED_IN,
+        data: {
+          isLoggedIn: true,
+        },
+      });
+
+      navigation.navigate(TabNavigator.PROFILE_TAB, {
+        screens: Screens.HOME,
+      });
     },
     onError(error) {
       setErrorMsg(error.message);
-
       setTimeout(() => {
         setErrorMsg(null);
       }, 4000);
@@ -36,8 +44,8 @@ const LoginScreen = ({ navigation }) => {
   });
 
   const initialValues = {
-    email: "",
-    password: "",
+    email: "eric@test.com",
+    password: "123123",
   };
 
   const validationSchema = Yup.object().shape({
@@ -60,11 +68,9 @@ const LoginScreen = ({ navigation }) => {
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={async (values) => {
-          const token = await loginUser({
+          await loginUser({
             variables: { email: values.email, password: values.password },
           });
-
-          console.log(token, "IN LOGIN PAGE");
         }}
       >
         {({
@@ -103,10 +109,6 @@ const LoginScreen = ({ navigation }) => {
           );
         }}
       </Formik>
-
-      <Button onPress={() => navigation.navigate(Screens.REGISTER)}>
-        Register
-      </Button>
     </View>
   );
 };

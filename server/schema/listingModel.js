@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const listingSchema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
     required: true,
   },
@@ -13,7 +13,7 @@ const listingSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  Owner: {
+  owner: {
     type: String,
     required: true,
   },

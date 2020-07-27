@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { AuthenticationError } = require("apollo-server");
+const { AuthenticationError, ApolloError } = require("apollo-server");
 
 const { createToken } = require("../utils/auth");
 const User = require("../schema/userModel");
@@ -36,8 +36,10 @@ const resolvers = {
       const { user } = ctx;
 
       if (!user) throw new AuthenticationError("Please login");
-
+      const res = await User.findOne({ email: user.email });
+      const id = res._id;
       return {
+        id,
         email: user.email,
         username: user.username,
       };
@@ -66,8 +68,8 @@ const resolvers = {
         const res = await User.findOne({ email });
         const res1 = await User.findOne({ username });
 
-        if (res) return "This email already exists";
-        if (res1) return "This username already exists";
+        if (res) throw new ApolloError("This email already exists");
+        if (res1) throw new ApolloError("This username already exists");
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -80,11 +82,32 @@ const resolvers = {
         await User.create(userData);
 
         const token = await createToken({ email, username });
-
         return token;
       } catch (error) {
         console.log(error);
       }
+    },
+    createListing: async (_, { newListing }, ctx) => {
+      const { title, price, description, owner } = newListing;
+
+      const newListingToAdd = {
+        title,
+        price,
+        description,
+        owner,
+      };
+      const res = await Listing.create(newListingToAdd);
+
+      return res;
+    },
+    deleteListing: async (_, { id }, ctx) => {
+      const res = await Listing.findById(id);
+
+      if (!res) return "No listing found";
+
+      await Listing.findByIdAndDelete(id);
+
+      return "Listing deleted";
     },
   },
 };

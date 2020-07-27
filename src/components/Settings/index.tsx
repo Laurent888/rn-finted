@@ -1,17 +1,35 @@
 import React from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { Screens, TabNavigator } from "@routeTypes";
+import { View, ScrollView } from "react-native";
+import { useNavigation, StackActions } from "@react-navigation/native";
+import { useApolloClient, ApolloClient } from "@apollo/client";
+import { IS_LOGGED_IN, GET_CURRENT_USER } from "@constants/queries";
 
 import ButtonWide from "../../components/common/ButtonWide";
 import { logout } from "../../lib/utils";
 
 const Settings = () => {
   const n = useNavigation();
+  const client: ApolloClient<any> = useApolloClient();
 
-  const handleLogOut = () => {
-    logout();
-    n.navigate(TabNavigator.HOME_TAB);
+  const handleLogOut = async () => {
+    await logout();
+    n.dispatch(StackActions.replace("root"));
+    await client.writeQuery({
+      query: IS_LOGGED_IN,
+      data: {
+        isLoggedIn: false,
+      },
+    });
+    await client.writeQuery({
+      query: GET_CURRENT_USER,
+      data: {
+        getCurrentUser: {
+          id: "",
+          email: "",
+          username: "",
+        },
+      },
+    });
   };
 
   return (
@@ -30,5 +48,3 @@ const Settings = () => {
 };
 
 export default Settings;
-
-const styles = StyleSheet.create({});
