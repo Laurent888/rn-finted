@@ -18,12 +18,17 @@ const resolvers = {
       }
     },
 
-    getListings: async () => {
-      const res = await Listing.find().populate('owner');
+    getListings: async (_, { ownerId }, ctx) => {
+      let res;
+      if (!ownerId) {
+        res = await Listing.find().populate('owner');
+      } else {
+        res = await Listing.find({ ownerId }).populate('owner');
+      }
       return res;
     },
     getListing: async (_, { id }, ctx) => {
-      const res = await Listing.findById(id);
+      const res = await Listing.findById(id).populate('owner');
 
       return res;
     },

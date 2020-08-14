@@ -43,16 +43,15 @@ export const GET_CURRENT_USER = gql`
 `;
 
 export const GET_LISTINGS = gql`
-  query {
-    getListings {
+  query GetListings($ownerId: String) {
+    getListings(ownerId: $ownerId) {
       id
       title
       description
       price
       images
+      ownerId
       owner {
-        id
-        email
         username
       }
     }
@@ -103,7 +102,11 @@ export const CREATE_LISTING = gql`
       title
       description
       price
-      owner
+      owner {
+        id
+        username
+        email
+      }
       images
     }
   }

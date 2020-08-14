@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { StyleSheet, Dimensions, View, Text, TouchableOpacity } from 'react-native';
 import { Avatar, Card } from 'react-native-paper';
-import { AntDesign as Icon } from '@expo/vector-icons';
+import { AntDesign as Icon, MaterialIcons } from '@expo/vector-icons';
 import { Screens } from '@routeTypes';
 import { Listing } from '@constants/types';
 
 import theme from '../../style/theme';
+import Price from './Price';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('screen');
 
@@ -17,6 +18,7 @@ const LeftContent = (props) => (
         'https://images.unsplash.com/photo-1593642531955-b62e17bdaa9c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
     }}
     size={24}
+    style={{ marginRight: 10 }}
   />
 );
 
@@ -26,8 +28,13 @@ interface Props {
 }
 
 const ItemCard = ({ navigation, item }: Props) => {
-  console.log(item);
-  const { title, price, images, id } = item;
+  const {
+    title,
+    price,
+    images,
+    id,
+    owner: { username },
+  } = item;
   const cardWidth = WIDTH / 2 - 1.5 * 10;
 
   const navigateToListing = () => {
@@ -39,7 +46,7 @@ const ItemCard = ({ navigation, item }: Props) => {
       <Card elevation={0} style={[s.cardContainer]}>
         <View style={s.header}>
           <LeftContent />
-          <Text>Hello</Text>
+          <Text style={s.username}>{username}</Text>
         </View>
         <Card.Cover
           source={{
@@ -48,7 +55,7 @@ const ItemCard = ({ navigation, item }: Props) => {
         />
         <Card.Content style={{ paddingHorizontal: 4, paddingTop: 5 }}>
           <View style={s.priceRow}>
-            <Text>{`${price}e`}</Text>
+            <Price price={price} />
             <View style={s.likes}>
               <Icon name="heart" size={15} style={[s.icon, s.grey]} />
               <Text style={s.grey}>4</Text>
@@ -74,9 +81,14 @@ const s = StyleSheet.create({
   grey: {
     color: theme.colors.mediumGrey,
   },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     paddingHorizontal: 10,
     paddingVertical: 5,
   },
@@ -98,5 +110,8 @@ const s = StyleSheet.create({
   title: {
     fontSize: theme.fontSize.caption,
     flexWrap: 'nowrap',
+  },
+  username: {
+    color: theme.colors.mediumGrey,
   },
 });

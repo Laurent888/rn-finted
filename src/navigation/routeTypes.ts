@@ -18,4 +18,5 @@ export enum Screens {
   PROFILE = 'profile',
   SETTINGS = 'settings',
   LOGIN_HOME = 'loginHome',
+  OTHER_PROFILE = 'otherProfile',
 }

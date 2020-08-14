@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import theme from '@theme';
 import { useQuery } from '@apollo/client';
 
@@ -11,9 +11,13 @@ import Postage from './Postage';
 import { GET_LISTING } from '@constants/queries';
 import LoadingIndicator from '../../components/common/LoadingIndicator';
 import Error from '../../components/common/Error';
+import { Avatar } from 'react-native-paper';
+import { Screens } from '@routeTypes';
+import UserInfoButton from '@components/common/UserInfoButton';
 
 const Listing = () => {
   const { params } = useRoute();
+  const n = useNavigation();
 
   const { data, loading, error } = useQuery(GET_LISTING, {
     variables: { id: params.id },
@@ -24,7 +28,17 @@ const Listing = () => {
   if (error) return <Error error={error} />;
 
   const { getListing } = data;
-  const { title, price, description, images } = getListing;
+  const {
+    title,
+    price,
+    description,
+    images,
+    owner: { username, id: ownerId },
+  } = getListing;
+
+  const navigateToOtherProfile = () => {
+    n.push(Screens.OTHER_PROFILE, { id: params.id, username, ownerId });
+  };
 
   return (
     <ScrollView>
@@ -37,18 +51,12 @@ const Listing = () => {
         />
       </View>
       <View style={s.contentContainer}>
-        <View style={s.userInfo}>
-          <View>
-            <Text>Avatar</Text>
-          </View>
-          <View>
-            <Text>Text</Text>
-            <Text>Stars</Text>
-          </View>
-        </View>
+        <UserInfoButton onPress={navigateToOtherProfile} username={username} />
 
         <ListingHeader title={title} price={price} />
+
         <ItemDescription description={description} />
+
         <DetailsButtons />
 
         <Postage price="23e" />
@@ -70,12 +78,4 @@ const s = StyleSheet.create({
     resizeMode: 'cover',
   },
   contentContainer: {},
-  userInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    backgroundColor: 'lightblue',
-    paddingVertical: 10,
-    paddingHorizontal: theme.padding.container,
-  },
 });

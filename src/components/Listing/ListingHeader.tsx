@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import theme from '@theme';
-
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import Button from '../common/Button';
+import Price from '@components/common/Price';
 
 interface Props {
   title: string;
@@ -15,7 +16,7 @@ const ListingHeader = ({ title, price }: Props) => {
       <View>
         <Text>{title}</Text>
         <Text style={s.condition}>Condition</Text>
-        <Text style={s.price}>{price}</Text>
+        <Price price={price} />
       </View>
 
       <View style={s.buttons}>
@@ -28,7 +29,7 @@ const ListingHeader = ({ title, price }: Props) => {
 
       <View style={s.refund}>
         <View style={s.iconContainer}>
-          <Text>Icon</Text>
+          <Icon name="shield-check" size={40} color={theme.colors.primary} />
         </View>
         <View>
           <Text>Be covered by our refund policy</Text>

@@ -14,6 +14,7 @@ const typeDefs = gql`
     description: String
     price: Int
     images: [String]
+    ownerId: ID!
     owner: User
   }
 
@@ -29,7 +30,7 @@ const typeDefs = gql`
     getUsers: [User]
     getUser(id: ID!): User
     me: User
-    getListings: [Listing]
+    getListings(ownerId: String): [Listing]
     getListing(id: ID!): Listing
     refreshToken(token: String): String
   }
