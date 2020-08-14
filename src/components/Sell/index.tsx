@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 import { useMutation, useQuery } from '@apollo/client';
-import { CREATE_LISTING, GET_ME, GET_CURRENT_USER } from '@constants/queries';
+import { CREATE_LISTING, GET_CURRENT_USER } from '@constants/queries';
 import { useNavigation } from '@react-navigation/native';
 
 import { styles as s } from './styles';
@@ -13,10 +13,8 @@ import ButtonWide from '../../components/common/ButtonWide';
 import ModalPrice from './ModalPrice';
 import ModalCategory from './ModalCategory';
 import AddImageModal from './AddImageModal';
-import AddImagePreview from '../../components/common/AddImagePreview';
 import ImagesPreviewSection from './ImagesPreviewSection';
 import LoadingIndicator from '../../components/common/LoadingIndicator';
-import { Screens } from '@routeTypes';
 
 const maxImage = 3;
 
@@ -41,6 +39,7 @@ const Sell = () => {
     title: '',
     description: '',
     price: '',
+    category: [],
     images: [],
   };
 
@@ -87,7 +86,7 @@ const Sell = () => {
 
           setModalImage(false);
         };
-
+        console.log(values.category, 'values.category');
         return (
           <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
             <AddImageModal
@@ -133,7 +132,11 @@ const Sell = () => {
             </View>
 
             <View style={s.container}>
-              <ButtonWide label="Category" onPress={() => setModalCateOpen(true)} />
+              <ButtonWide
+                label="Category"
+                desc={values.category[values.category.length - 1] || ''}
+                onPress={() => setModalCateOpen(true)}
+              />
               <ButtonWide label="Brand" onPress={() => console.log('')} />
               <ButtonWide label="Condition" onPress={() => console.log('')} />
             </View>
@@ -166,7 +169,15 @@ const Sell = () => {
               isVisible={modalPriceOpen}
             />
 
-            <ModalCategory isVisible={modalCateOpen} cancel={() => setModalCateOpen(false)} />
+            <ModalCategory
+              isVisible={modalCateOpen}
+              cancel={() => setModalCateOpen(false)}
+              onConfirm={(category) => {
+                setFieldValue('category', category);
+
+                setModalCateOpen(false);
+              }}
+            />
           </ScrollView>
         );
       }}

@@ -1,22 +1,91 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import Modal from 'react-native-modal';
 
 import theme from '@theme';
 import { categories } from '../../constant/categories';
 
 import ButtonWide from '../../components/common/ButtonWide';
+import ModalSubCategories from './ModalSubCategories';
 
 interface Props {
   isVisible: boolean;
   cancel: () => void;
+  onConfirm: (cateogry) => void;
 }
 
-const ModalCategory = ({ isVisible, cancel }: Props) => {
+const width = Dimensions.get('screen').width;
+
+const ModalCategory = ({ isVisible, cancel, onConfirm }: Props) => {
+  const [step, setStep] = useState(0);
+  const [categoryArray, setCategoryArray] = useState([]);
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    if (scrollRef.current !== null) {
+      scrollRef.current.scrollTo({ x: step * width });
+    }
+
+    if (categoryArray.length === 2) {
+      onConfirm(categoryArray);
+      setCategoryArray([]);
+      setTimeout(() => {
+        setStep(0);
+      }, 200);
+    }
+
+    return () => {
+      console.log('CLEAN UP');
+    };
+  }, [scrollRef.current, categoryArray]);
+
+  console.log(step, 'STEP');
+
+  const nextStep = () => {
+    if (step === 0) {
+      setStep((prev) => prev + 1);
+    }
+  };
+
+  const previousStep = () => {
+    if (step === 0) {
+      setCategoryArray([]);
+      setStep(0);
+      cancel();
+    }
+    if (step > 0) {
+      setStep((prev) => prev - 1);
+    }
+  };
+
   const renderCategories = () =>
     Object.keys(categories).map((c) => (
-      <ButtonWide key={c} label={c} onPress={() => console.log('')} />
+      <ButtonWide
+        key={c}
+        label={c}
+        onPress={() => {
+          setCategoryArray([c]);
+          nextStep();
+        }}
+      />
     ));
+  console.log(categoryArray, 'categoryArray');
+  const renderSubCategories = (category: string) => {
+    return categories[category].values.map((subCategory) => (
+      <ButtonWide
+        key={subCategory}
+        label={subCategory}
+        onPress={() => {
+          if (categoryArray.length <= 1) {
+            setCategoryArray((p) => [...p, subCategory]);
+          }
+
+          nextStep();
+        }}
+      />
+    ));
+  };
+
   return (
     <Modal
       coverScreen
@@ -28,13 +97,27 @@ const ModalCategory = ({ isVisible, cancel }: Props) => {
       backdropColor="#fff"
       backdropOpacity={1}
       isVisible={isVisible}
+      animationIn="slideInRight"
+      animationOut="fadeOut"
     >
-      <View style={s.cancel}>
-        <TouchableOpacity onPress={cancel}>
-          <Text>Cancel</Text>
-        </TouchableOpacity>
-      </View>
-      {renderCategories()}
+      <ScrollView horizontal pagingEnabled ref={scrollRef}>
+        <View style={{ flex: 1, backgroundColor: 'lightblue' }}>
+          <View style={s.cancel}>
+            <TouchableOpacity onPress={() => previousStep()}>
+              <Text>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+          {renderCategories()}
+        </View>
+        <View style={{ flex: 1, backgroundColor: 'lightgreen' }}>
+          <View style={s.cancel}>
+            <TouchableOpacity onPress={() => previousStep()}>
+              <Text>Back</Text>
+            </TouchableOpacity>
+          </View>
+          {categoryArray.length > 0 && renderSubCategories(categoryArray[0])}
+        </View>
+      </ScrollView>
     </Modal>
   );
 };

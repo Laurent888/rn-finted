@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useQuery } from '@apollo/client';
-import { GET_USERS, GET_LISTINGS } from '@constants/queries';
+import { GET_USERS, GET_LISTINGS, GET_CURRENT_USER } from '@constants/queries';
 import UserInfoButton from '@components/common/UserInfoButton';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import theme from '@theme';
@@ -25,6 +25,9 @@ const OtherProfile = () => {
   });
 
   const { data, loading, error } = useQuery(GET_LISTINGS, { variables: { ownerId } });
+  const { data: cData } = useQuery(GET_CURRENT_USER);
+
+  console.log(cData);
 
   const userDetails = [
     {
@@ -57,25 +60,29 @@ const OtherProfile = () => {
         ))}
       </View>
 
-      <View style={s.box}>
-        <View style={s.buttonsContainer}>
-          <Button mode="outlined" style={{ width: 170 }}>
-            Message
-          </Button>
-          <Button mode="contained" style={{ width: 170 }}>
-            Follow
-          </Button>
-        </View>
-      </View>
-      <View style={s.box}>
-        <View style={s.buttonsContainer}>
-          <View>
-            <Text style={s.text}>Shop bundles</Text>
-            <Text style={(s.text, { color: theme.colors.mediumGrey })}>Save on postage</Text>
+      {cData.getCurrentUser.id !== ownerId && (
+        <>
+          <View style={s.box}>
+            <View style={s.buttonsContainer}>
+              <Button mode="outlined" style={{ width: 170 }}>
+                Message
+              </Button>
+              <Button mode="contained" style={{ width: 170 }}>
+                Follow
+              </Button>
+            </View>
           </View>
-          <Button mode="contained">Follow</Button>
-        </View>
-      </View>
+          <View style={s.box}>
+            <View style={s.buttonsContainer}>
+              <View>
+                <Text style={s.text}>Shop bundles</Text>
+                <Text style={(s.text, { color: theme.colors.mediumGrey })}>Save on postage</Text>
+              </View>
+              <Button mode="contained">Follow</Button>
+            </View>
+          </View>
+        </>
+      )}
 
       <View style={[s.box, s.list]}>
         {data.getListings.map((item: Listing) => (

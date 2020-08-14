@@ -6,35 +6,13 @@ import { Entypo } from '@expo/vector-icons';
 import theme from '@theme';
 
 import Button from '../../components/common/Button';
+import { mockPhoto } from '@constants/mockData';
 
 interface Props {
   isVisible: boolean;
   onClose: () => void;
   onPress: (imgUrl: string) => void;
 }
-
-const mockPhoto = [
-  {
-    name:
-      'https://images.unsplash.com/photo-1523206489230-c012c64b2b48?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-  },
-  {
-    name:
-      'https://images.unsplash.com/photo-1517439270744-8d9287c2f8f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-  },
-  {
-    name:
-      'https://images.unsplash.com/photo-1551721434-8b94ddff0e6d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-  },
-  {
-    name:
-      'https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-  },
-  {
-    name:
-      'https://images.unsplash.com/photo-1505158498176-0150297fbd7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-  },
-];
 
 const AddImageModal = ({ isVisible, onPress, onClose }: Props) => {
   const [imageUrl, setImageUrl] = useState('');

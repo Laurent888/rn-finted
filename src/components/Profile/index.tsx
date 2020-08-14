@@ -37,7 +37,12 @@ const Profile = () => {
   return (
     <ScrollView>
       <View style={s.container}>
-        <TouchableOpacity style={s.profileBtn}>
+        <TouchableOpacity
+          style={s.profileBtn}
+          onPress={() =>
+            n.navigate(Screens.OTHER_PROFILE, { ownerId: me.id, username: me.username })
+          }
+        >
           <View style={s.avatar}>
             <Avatar.Image
               source={{
