@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import { useQuery } from "@apollo/client";
+import React, { useEffect } from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import { useQuery } from '@apollo/client';
 
-import ProfileScreen from "@screens/ProfileScreen";
-import NotLoggedInScreen from "@screens/NotLoggedInScreen";
-import SettingsScreen from "@screens/SettingsScreen";
+import ProfileScreen from '@screens/ProfileScreen';
+import NotLoggedInScreen from '@screens/NotLoggedInScreen';
+import SettingsScreen from '@screens/SettingsScreen';
 
-import { Screens } from "@routeTypes";
+import { Screens } from '@routeTypes';
 
-import { IS_LOGGED_IN } from "../../constant/queries";
-import LoadingIndicator from "../../components/common/LoadingIndicator";
-import Error from "../../components/common/Error";
+import { IS_LOGGED_IN } from '../../constant/queries';
+import LoadingIndicator from '../../components/common/LoadingIndicator';
+import Error from '../../components/common/Error';
 
 const Stack = createStackNavigator();
 

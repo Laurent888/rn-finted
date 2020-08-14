@@ -1,10 +1,10 @@
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const { AuthenticationError, ApolloError } = require("apollo-server");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { AuthenticationError, ApolloError } = require('apollo-server');
 
-const { createToken } = require("../utils/auth");
-const User = require("../schema/userModel");
-const Listing = require("../schema/listingModel");
+const { createToken } = require('../utils/auth');
+const User = require('../schema/userModel');
+const Listing = require('../schema/listingModel');
 
 const resolvers = {
   Query: {
@@ -19,7 +19,11 @@ const resolvers = {
     },
 
     getListings: async () => {
-      const res = await Listing.find();
+      const res = await Listing.find().populate('owner');
+      return res;
+    },
+    getListing: async (_, { id }, ctx) => {
+      const res = await Listing.findById(id);
 
       return res;
     },
@@ -35,7 +39,7 @@ const resolvers = {
     me: async (_, args, ctx) => {
       const { user } = ctx;
 
-      if (!user) throw new AuthenticationError("Please login");
+      if (!user) throw new AuthenticationError('Please login');
       const res = await User.findOne({ email: user.email });
       const id = res._id;
       return {
@@ -51,11 +55,11 @@ const resolvers = {
 
       const res = await User.findOne({ email });
 
-      if (!res) throw new AuthenticationError("Wrong credential");
+      if (!res) throw new AuthenticationError('Wrong credential');
 
       const match = await bcrypt.compare(password, res.password);
 
-      if (!match) throw new AuthenticationError("Wrong credential");
+      if (!match) throw new AuthenticationError('Wrong credential');
 
       const token = await createToken({ email, username: res.username });
 
@@ -68,8 +72,8 @@ const resolvers = {
         const res = await User.findOne({ email });
         const res1 = await User.findOne({ username });
 
-        if (res) throw new ApolloError("This email already exists");
-        if (res1) throw new ApolloError("This username already exists");
+        if (res) throw new ApolloError('This email already exists');
+        if (res1) throw new ApolloError('This username already exists');
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -88,26 +92,27 @@ const resolvers = {
       }
     },
     createListing: async (_, { newListing }, ctx) => {
-      const { title, price, description, owner } = newListing;
+      const { title, price, description, images, owner } = newListing;
 
       const newListingToAdd = {
         title,
         price,
         description,
+        images,
         owner,
       };
       const res = await Listing.create(newListingToAdd);
-
+      await res.populate('owner').execPopulate();
       return res;
     },
     deleteListing: async (_, { id }, ctx) => {
       const res = await Listing.findById(id);
 
-      if (!res) return "No listing found";
+      if (!res) return 'No listing found';
 
       await Listing.findByIdAndDelete(id);
 
-      return "Listing deleted";
+      return 'Listing deleted';
     },
   },
 };

@@ -1,21 +1,38 @@
-import React from "react";
-import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
+import React from 'react';
+import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+import { useRoute } from '@react-navigation/native';
+import theme from '@theme';
+import { useQuery } from '@apollo/client';
 
-import theme from "@theme";
-import ListingHeader from "./ListingHeader";
-import ItemDescription from "./ItemDescription";
-import DetailsButtons from "./DetailsButtons";
-import Postage from "./Postage";
+import ListingHeader from './ListingHeader';
+import ItemDescription from './ItemDescription';
+import DetailsButtons from './DetailsButtons';
+import Postage from './Postage';
+import { GET_LISTING } from '@constants/queries';
+import LoadingIndicator from '../../components/common/LoadingIndicator';
+import Error from '../../components/common/Error';
 
 const Listing = () => {
+  const { params } = useRoute();
+
+  const { data, loading, error } = useQuery(GET_LISTING, {
+    variables: { id: params.id },
+    fetchPolicy: 'cache-and-network',
+  });
+
+  if (loading) return <LoadingIndicator />;
+  if (error) return <Error error={error} />;
+
+  const { getListing } = data;
+  const { title, price, description, images } = getListing;
+
   return (
     <ScrollView>
       <View style={s.imgContainer}>
         <Image
           style={s.img}
           source={{
-            uri:
-              "https://images.unsplash.com/photo-1593642531955-b62e17bdaa9c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80",
+            uri: images[0],
           }}
         />
       </View>
@@ -30,8 +47,8 @@ const Listing = () => {
           </View>
         </View>
 
-        <ListingHeader />
-        <ItemDescription />
+        <ListingHeader title={title} price={price} />
+        <ItemDescription description={description} />
         <DetailsButtons />
 
         <Postage price="23e" />
@@ -44,20 +61,20 @@ export default Listing;
 
 const s = StyleSheet.create({
   imgContainer: {
-    width: "100%",
+    width: '100%',
     height: 400,
   },
   img: {
-    width: "100%",
-    height: "100%",
-    resizeMode: "cover",
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
   contentContainer: {},
   userInfo: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    backgroundColor: "lightblue",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    backgroundColor: 'lightblue',
     paddingVertical: 10,
     paddingHorizontal: theme.padding.container,
   },

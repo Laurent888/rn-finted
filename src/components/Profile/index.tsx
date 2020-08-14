@@ -1,26 +1,20 @@
-import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
-import { Avatar } from "react-native-paper";
-import { useQuery, useApolloClient } from "@apollo/client";
-import theme from "@theme";
-import { GET_ME, IS_LOGGED_IN, GET_CURRENT_USER } from "@constants/queries";
-import { useNavigation } from "@react-navigation/native";
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { Avatar } from 'react-native-paper';
+import { useQuery, useApolloClient } from '@apollo/client';
+import theme from '@theme';
+import { GET_ME, IS_LOGGED_IN, GET_CURRENT_USER } from '@constants/queries';
+import { useNavigation } from '@react-navigation/native';
 
-import ButtonWide from "../../components/common/ButtonWide";
-import LoadingIndicator from "../../components/common/LoadingIndicator";
-import Error from "../../components/common/Error";
-import { Screens } from "@routeTypes";
+import ButtonWide from '../../components/common/ButtonWide';
+import LoadingIndicator from '../../components/common/LoadingIndicator';
+import Error from '../../components/common/Error';
+import { Screens } from '@routeTypes';
 
 const Profile = () => {
   const client = useApolloClient();
   const { data, loading, error } = useQuery(GET_ME, {
-    fetchPolicy: "network-only",
+    fetchPolicy: 'network-only',
   });
 
   const n = useNavigation();
@@ -39,7 +33,7 @@ const Profile = () => {
       },
     },
   });
-  console.log(me, "IN PROFILE");
+  console.log(me, 'IN PROFILE');
   return (
     <ScrollView>
       <View style={s.container}>
@@ -48,7 +42,7 @@ const Profile = () => {
             <Avatar.Image
               source={{
                 uri:
-                  "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Brad_Pitt_2019_by_Glenn_Francis.jpg/1200px-Brad_Pitt_2019_by_Glenn_Francis.jpg",
+                  'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Brad_Pitt_2019_by_Glenn_Francis.jpg/1200px-Brad_Pitt_2019_by_Glenn_Francis.jpg',
               }}
               size={45}
             />
@@ -59,37 +53,31 @@ const Profile = () => {
           </View>
         </TouchableOpacity>
 
-        <ButtonWide
-          label="Your guide to Finted"
-          onPress={() => console.log("")}
-        />
+        <ButtonWide label="Your guide to Finted" onPress={() => console.log('')} />
       </View>
 
       <View style={s.container}>
-        <ButtonWide label="Favorite items" onPress={() => console.log("")} />
-        <ButtonWide label="Personalisation" onPress={() => console.log("")} />
-        <ButtonWide label="Balance" onPress={() => console.log("")} />
-        <ButtonWide label="My orders" onPress={() => console.log("")} />
-        <ButtonWide label="Bundle discounts" onPress={() => console.log("")} />
+        <ButtonWide label="Favorite items" onPress={() => console.log('')} />
+        <ButtonWide label="Personalisation" onPress={() => console.log('')} />
+        <ButtonWide label="Balance" onPress={() => console.log('')} />
+        <ButtonWide label="My orders" onPress={() => console.log('')} />
+        <ButtonWide label="Bundle discounts" onPress={() => console.log('')} />
       </View>
 
       <View style={s.container}>
-        <ButtonWide label="Forum" onPress={() => console.log("")} />
+        <ButtonWide label="Forum" onPress={() => console.log('')} />
       </View>
 
       <View style={s.container}>
-        <ButtonWide label="Invite friends" onPress={() => console.log("")} />
+        <ButtonWide label="Invite friends" onPress={() => console.log('')} />
       </View>
       <View style={s.container}>
-        <ButtonWide label="Holiday mode" onPress={() => console.log("")} />
+        <ButtonWide label="Holiday mode" onPress={() => console.log('')} />
       </View>
       <View style={s.container}>
-        <ButtonWide
-          label="Settings"
-          onPress={() => n.navigate(Screens.SETTINGS)}
-        />
-        <ButtonWide label="About Finted" onPress={() => console.log("")} />
-        <ButtonWide label="Help center" onPress={() => console.log("")} />
+        <ButtonWide label="Settings" onPress={() => n.navigate(Screens.SETTINGS)} />
+        <ButtonWide label="About Finted" onPress={() => console.log('')} />
+        <ButtonWide label="Help center" onPress={() => console.log('')} />
       </View>
     </ScrollView>
   );
@@ -103,8 +91,8 @@ const s = StyleSheet.create({
     marginBottom: 10,
   },
   profileBtn: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: theme.padding.large,
     borderBottomWidth: 0.5,
     borderBottomColor: theme.colors.lightGrey,

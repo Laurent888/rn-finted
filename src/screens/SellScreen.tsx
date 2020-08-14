@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import Sell from "../components/Sell";
+import Sell from '../components/Sell';
 
 const SellScreen = () => {
   return <Sell />;

@@ -1,16 +1,21 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import theme from "@theme";
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import theme from '@theme';
 
-import Button from "../common/Button";
+import Button from '../common/Button';
 
-const ListingHeader = () => {
+interface Props {
+  title: string;
+  price: number;
+}
+
+const ListingHeader = ({ title, price }: Props) => {
   return (
     <View style={s.container}>
       <View>
-        <Text>Title</Text>
+        <Text>{title}</Text>
         <Text style={s.condition}>Condition</Text>
-        <Text style={s.price}>Price</Text>
+        <Text style={s.price}>{price}</Text>
       </View>
 
       <View style={s.buttons}>
@@ -46,7 +51,7 @@ const s = StyleSheet.create({
   container: {
     paddingHorizontal: theme.padding.container,
     paddingVertical: theme.padding.medium,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
   condition: {
     color: theme.colors.mediumGrey,
@@ -56,8 +61,8 @@ const s = StyleSheet.create({
     paddingVertical: 30,
   },
   refund: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingBottom: 30,
   },
   iconContainer: {
@@ -65,8 +70,8 @@ const s = StyleSheet.create({
   },
   favoriteShare: {
     paddingVertical: theme.padding.small,
-    flexDirection: "row",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     borderTopWidth: 1,
     borderTopColor: theme.colors.lightGrey,
   },
@@ -75,7 +80,7 @@ const s = StyleSheet.create({
   },
   divider: {
     width: 1,
-    height: "100%",
+    height: '100%',
     backgroundColor: theme.colors.lightGrey,
   },
 });

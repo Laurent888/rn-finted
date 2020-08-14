@@ -1,4 +1,4 @@
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 // QUERIES
 
@@ -42,6 +42,40 @@ export const GET_CURRENT_USER = gql`
   }
 `;
 
+export const GET_LISTINGS = gql`
+  query {
+    getListings {
+      id
+      title
+      description
+      price
+      images
+      owner {
+        id
+        email
+        username
+      }
+    }
+  }
+`;
+
+export const GET_LISTING = gql`
+  query GetListing($id: ID!) {
+    getListing(id: $id) {
+      id
+      title
+      description
+      price
+      images
+      owner {
+        id
+        email
+        username
+      }
+    }
+  }
+`;
+
 // MUTATIONS
 
 export const LOGIN = gql`
@@ -70,6 +104,7 @@ export const CREATE_LISTING = gql`
       description
       price
       owner
+      images
     }
   }
 `;

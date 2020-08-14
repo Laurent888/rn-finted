@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, AsyncStorage } from "react-native";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import { useMutation, useApolloClient, ApolloClient } from "@apollo/client";
-import theme from "@theme";
-import { LOGIN, IS_LOGGED_IN } from "@constants/queries";
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { useMutation, useApolloClient, ApolloClient } from '@apollo/client';
+import theme from '@theme';
+import { LOGIN, IS_LOGGED_IN } from '@constants/queries';
 
-import Button from "../components/common/Button";
-import InputField from "../components/common/InputField";
-import { TabNavigator, Screens } from "@routeTypes";
+import Button from '../components/common/Button';
+import InputField from '../components/common/InputField';
+import { TabNavigator, Screens } from '@routeTypes';
 
 const LoginScreen = ({ navigation }) => {
   useEffect(() => {
     navigation.setOptions({
-      title: "Log in",
+      title: 'Log in',
     });
   }, []);
 
@@ -22,8 +22,8 @@ const LoginScreen = ({ navigation }) => {
 
   const [loginUser, { loading, error }] = useMutation(LOGIN, {
     onCompleted: async ({ login }) => {
-      console.log("FROM LOGIN");
-      await AsyncStorage.setItem("TOKEN", login as string);
+      console.log('FROM LOGIN');
+      await AsyncStorage.setItem('TOKEN', login as string);
       client.writeQuery({
         query: IS_LOGGED_IN,
         data: {
@@ -44,17 +44,15 @@ const LoginScreen = ({ navigation }) => {
   });
 
   const initialValues = {
-    email: "eric@test.com",
-    password: "123123",
+    email: 'eric@test.com',
+    password: '123123',
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Invalid email address")
-      .required("This field is required"),
+    email: Yup.string().email('Invalid email address').required('This field is required'),
     password: Yup.string()
-      .min(4, "Must be 4 characters or more")
-      .required("This field is required"),
+      .min(4, 'Must be 4 characters or more')
+      .required('This field is required'),
   });
 
   return (
@@ -73,14 +71,7 @@ const LoginScreen = ({ navigation }) => {
           });
         }}
       >
-        {({
-          handleChange,
-          handleSubmit,
-          values,
-          handleBlur,
-          errors,
-          touched,
-        }) => {
+        {({ handleChange, handleSubmit, values, handleBlur, errors, touched }) => {
           if (errors.email && touched.email) {
             console.log(errors);
           }
@@ -90,16 +81,16 @@ const LoginScreen = ({ navigation }) => {
                 name="email"
                 label="Email"
                 value={values.email}
-                onChangeText={handleChange("email")}
-                onBlur={handleBlur("email")}
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
                 containerStyle={s.input}
               />
               <InputField
                 name="password"
                 label="Password"
                 value={values.password}
-                onChangeText={handleChange("password")}
-                onBlur={handleBlur("password")}
+                onChangeText={handleChange('password')}
+                onBlur={handleBlur('password')}
                 containerStyle={s.input}
               />
               <Button mode="contained" onPress={handleSubmit}>
@@ -128,14 +119,14 @@ const s = StyleSheet.create({
     marginBottom: 20,
   },
   errorContainer: {
-    alignItems: "center",
+    alignItems: 'center',
     marginVertical: 15,
   },
   errorMsg: {
     color: theme.colors.error,
-    backgroundColor: "rgba(147,36,36,0.20)",
+    backgroundColor: 'rgba(147,36,36,0.20)',
     paddingVertical: 10,
     paddingHorizontal: 30,
-    textTransform: "capitalize",
+    textTransform: 'capitalize',
   },
 });

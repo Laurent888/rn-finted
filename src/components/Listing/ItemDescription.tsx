@@ -1,17 +1,16 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import theme from "@theme";
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import theme from '@theme';
 
-const ItemDescription = () => {
+interface Props {
+  description: string;
+}
+
+const ItemDescription = ({ description }: Props) => {
   return (
     <View style={s.container}>
       <Text style={s.title}>Item description</Text>
-      <Text style={s.desc}>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat fugit
-        magni consequatur hic veniam, laboriosam cumque iure corporis,
-        perferendis sint exercitationem! Eum esse deleniti animi maxime ullam,
-        soluta dolore dicta?
-      </Text>
+      <Text style={s.desc}>{description}</Text>
     </View>
   );
 };

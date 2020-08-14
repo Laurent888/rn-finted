@@ -1,11 +1,11 @@
-import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import Modal from "react-native-modal";
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import Modal from 'react-native-modal';
 
-import theme from "@theme";
-import { categories } from "../../constant/categories";
+import theme from '@theme';
+import { categories } from '../../constant/categories';
 
-import ButtonWide from "../../components/common/ButtonWide";
+import ButtonWide from '../../components/common/ButtonWide';
 
 interface Props {
   isVisible: boolean;
@@ -15,14 +15,14 @@ interface Props {
 const ModalCategory = ({ isVisible, cancel }: Props) => {
   const renderCategories = () =>
     Object.keys(categories).map((c) => (
-      <ButtonWide key={c} label={c} onPress={() => console.log("")} />
+      <ButtonWide key={c} label={c} onPress={() => console.log('')} />
     ));
   return (
     <Modal
       coverScreen
       style={{
-        alignSelf: "center",
-        justifyContent: "flex-start",
+        alignSelf: 'center',
+        justifyContent: 'flex-start',
         width: theme.dimensions.width,
       }}
       backdropColor="#fff"

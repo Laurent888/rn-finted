@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server");
+const { gql } = require('apollo-server');
 
 const typeDefs = gql`
   type User {
@@ -13,7 +13,8 @@ const typeDefs = gql`
     title: String
     description: String
     price: Int
-    owner: ID!
+    images: [String]
+    owner: User
   }
 
   input CreateListingInput {
@@ -21,6 +22,7 @@ const typeDefs = gql`
     price: Int!
     description: String!
     owner: ID!
+    images: [String]
   }
 
   type Query {

@@ -1,10 +1,10 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { Screens } from "@routeTypes";
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Screens } from '@routeTypes';
 
-import Newsfeed from "@screens/Newsfeed";
-import ListingScreen from "@screens/ListingScreen";
+import Newsfeed from '@screens/Newsfeed';
+import ListingScreen from '@screens/ListingScreen';
 
 const Stack = createStackNavigator();
 

@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import Profile from "../components/Profile";
+import Profile from '../components/Profile';
 
 const ProfileScreen = () => {
   return <Profile />;

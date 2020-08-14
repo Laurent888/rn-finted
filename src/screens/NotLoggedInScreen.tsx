@@ -1,11 +1,11 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Button } from "react-native-paper";
-import { Screens } from "@routeTypes";
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Button } from 'react-native-paper';
+import { Screens } from '@routeTypes';
 
 const NotLoggedInScreen = ({ navigation }) => {
   const openLoginScreen = () => {
-    navigation.navigate("loginModal");
+    navigation.navigate('loginModal');
   };
 
   return (

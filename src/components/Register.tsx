@@ -5,13 +5,12 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import theme from "@theme";
 import { KeyboardAwareScrollView } from "@codler/react-native-keyboard-aware-scroll-view";
-import { useMutation, ApolloError } from "@apollo/client";
-import { CREATE_USER } from "@constants/queries";
+import { useMutation, ApolloError, useQuery } from "@apollo/client";
+import { CREATE_USER, IS_LOGGED_IN } from "@constants/queries";
 
 import InputField from "./common/InputField";
 import Button from "./common/Button";
 import { ActivityIndicator } from "react-native-paper";
-import { isLoggedInVar } from "../lib/apollo";
 import { TabNavigator, Screens } from "@routeTypes";
 
 const initialValues = {
@@ -45,8 +44,8 @@ const Register = () => {
     },
     onCompleted: async ({ createUser }) => {
       await AsyncStorage.setItem("TOKEN", createUser);
-      isLoggedInVar(true);
-      n.navigate(TabNavigator.PROFILE_TAB, { screens: Screens.PROFILE });
+
+      n.navigate(Screens.LOGIN);
     },
   });
 

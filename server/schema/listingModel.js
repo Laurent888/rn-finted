@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const listingSchema = new mongoose.Schema({
   title: {
@@ -13,10 +13,14 @@ const listingSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  owner: {
-    type: String,
+  images: {
+    type: Array,
     required: true,
+  },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
   },
 });
 
-module.exports = mongoose.model("listing", listingSchema);
+module.exports = mongoose.model('listing', listingSchema);

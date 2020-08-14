@@ -1,31 +1,30 @@
-import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
-import { Button, TextInput, useTheme } from "react-native-paper";
+import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Button, TextInput, useTheme } from 'react-native-paper';
 
 export default function Home() {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   const t = useTheme();
-
   return (
     <View
       style={{
         flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
       <View
         style={{
-          alignItems: "center",
-          justifyContent: "center",
-          width: "100%",
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
           paddingHorizontal: 20,
           marginBottom: 10,
         }}
       >
         <TextInput
           mode="flat"
-          style={{ width: "100%" }}
+          style={{ width: '100%' }}
           label="email"
           value={value}
           onChangeText={(e) => setValue(e)}

@@ -1,8 +1,8 @@
-import React, { ChangeEvent, useState } from "react";
-import { StyleSheet, Text, View, TextInput, Dimensions } from "react-native";
-import Modal from "react-native-modal";
+import React, { ChangeEvent, useState } from 'react';
+import { StyleSheet, Text, View, TextInput, Dimensions } from 'react-native';
+import Modal from 'react-native-modal';
 
-import Button from "../common/Button";
+import Button from '../common/Button';
 
 interface Props {
   s: any;
@@ -11,21 +11,21 @@ interface Props {
   isVisible: boolean;
 }
 
-const { width, height } = Dimensions.get("window");
+const { width, height } = Dimensions.get('window');
 
 const ModalPrice = ({ s, onPress, isVisible }: Props) => {
-  const [price, setPrice] = useState<string>("");
+  const [price, setPrice] = useState<string>('');
 
   return (
     <Modal
       isVisible={isVisible}
       coverScreen={true}
       style={{
-        backgroundColor: "#fff",
+        backgroundColor: '#fff',
         width,
         height: height + 50,
-        alignSelf: "center",
-        justifyContent: "flex-start",
+        alignSelf: 'center',
+        justifyContent: 'flex-start',
       }}
       backdropOpacity={1}
       backdropColor="#fff"

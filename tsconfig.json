@@ -13,7 +13,8 @@
       "@routeTypes": ["./navigation/routeTypes.ts"],
       "@theme": ["./style/theme.ts"],
       "@screens/*": ["./screens/*"],
-      "@constants/*": ["./constant/*"]
+      "@constants/*": ["./constant/*"],
+      "@components/*": ["./components/*"]
     }
   }
 }
