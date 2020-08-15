@@ -33,8 +33,10 @@ const Listing = () => {
     price,
     description,
     images,
+    category,
     owner: { username, id: ownerId },
   } = getListing;
+  console.log(getListing);
 
   const navigateToOtherProfile = () => {
     n.push(Screens.OTHER_PROFILE, { id: params.id, username, ownerId });
@@ -57,7 +59,7 @@ const Listing = () => {
 
         <ItemDescription description={description} />
 
-        <DetailsButtons />
+        <DetailsButtons category={category} navigation={n} />
 
         <Postage price="23e" />
       </View>

@@ -17,6 +17,10 @@ const listingSchema = new mongoose.Schema({
     type: Array,
     required: true,
   },
+  category: {
+    type: Array,
+    required: true,
+  },
   ownerId: {
     type: String,
     required: true,

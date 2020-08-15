@@ -36,9 +36,9 @@ const Sell = () => {
   const { data } = useQuery(GET_CURRENT_USER);
 
   const initialValues = {
-    title: '',
-    description: '',
-    price: '',
+    title: 'A new dog',
+    description: 'all dogs are so cute',
+    price: '50',
     category: [],
     images: [],
   };
@@ -60,7 +60,8 @@ const Sell = () => {
           n.navigate('loginModal');
           return;
         }
-
+        console.log(userId, 'userId');
+        console.log(values, 'VALUES');
         await createListing({
           variables: {
             newListing: {
@@ -68,6 +69,7 @@ const Sell = () => {
               description: values.description,
               price: parseInt(values.price) as number,
               images: values.images,
+              ownerId: userId,
               owner: userId,
             },
           },
@@ -86,7 +88,6 @@ const Sell = () => {
 
           setModalImage(false);
         };
-        console.log(values.category, 'values.category');
         return (
           <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
             <AddImageModal

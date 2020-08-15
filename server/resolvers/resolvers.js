@@ -97,7 +97,7 @@ const resolvers = {
       }
     },
     createListing: async (_, { newListing }, ctx) => {
-      const { title, price, description, images, owner } = newListing;
+      const { title, price, description, images, owner, ownerId, category } = newListing;
 
       const newListingToAdd = {
         title,
@@ -105,9 +105,10 @@ const resolvers = {
         description,
         images,
         owner,
+        ownerId,
+        category,
       };
       const res = await Listing.create(newListingToAdd);
-      await res.populate('owner').execPopulate();
       return res;
     },
     deleteListing: async (_, { id }, ctx) => {

@@ -1,13 +1,7 @@
-import React from "react";
-import {
-  StyleSheet,
-  Text,
-  Dimensions,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { Ionicons as Icon } from "@expo/vector-icons";
-import theme from "@theme";
+import React from 'react';
+import { StyleSheet, Text, Dimensions, TouchableOpacity, View } from 'react-native';
+import { Ionicons as Icon } from '@expo/vector-icons';
+import theme from '@theme';
 
 interface Props {
   label: string;
@@ -21,14 +15,9 @@ interface CustomButtonProps {
   onPress?: () => void;
 }
 
-const WIDTH = Dimensions.get("screen").width;
+const WIDTH = Dimensions.get('screen').width;
 
-const CustomButton = ({
-  children,
-  onPress,
-  style,
-  ...props
-}: CustomButtonProps) => {
+const CustomButton = ({ children, onPress, style, ...props }: CustomButtonProps) => {
   if (onPress) {
     return (
       <TouchableOpacity {...props} onPress={onPress} style={style}>
@@ -50,13 +39,7 @@ const ButtonWide = ({ label, desc, onPress }: Props) => {
       <Text style={s.label}>{label}</Text>
       <View style={s.right}>
         <Text style={[s.desc, { marginRight: onPress ? 10 : 0 }]}>{desc}</Text>
-        {onPress && (
-          <Icon
-            name="ios-arrow-forward"
-            size={24}
-            color={theme.colors.mediumGrey}
-          />
-        )}
+        {onPress && <Icon name="ios-arrow-forward" size={24} color={theme.colors.mediumGrey} />}
       </View>
     </CustomButton>
   );
@@ -69,9 +52,9 @@ const s = StyleSheet.create({
     width: WIDTH,
     paddingVertical: theme.padding.large,
     paddingHorizontal: theme.padding.large,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     borderBottomColor: theme.colors.lightGrey,
     borderBottomWidth: 0.5,
     backgroundColor: theme.colors.white,
@@ -79,14 +62,15 @@ const s = StyleSheet.create({
   label: {
     fontSize: theme.fontSize.normal,
     color: theme.colors.black,
-    fontWeight: "600",
+    fontWeight: '600',
   },
   right: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   desc: {
     fontSize: theme.fontSize.normal,
     color: theme.colors.darkGrey,
+    textTransform: 'capitalize',
   },
 });

@@ -14,16 +14,19 @@ const typeDefs = gql`
     description: String
     price: Int
     images: [String]
-    ownerId: ID!
+    ownerId: String
     owner: User
+    category: [String]
   }
 
   input CreateListingInput {
     title: String!
     price: Int!
     description: String!
-    owner: ID!
+    ownerId: String
+    owner: ID
     images: [String]
+    category: [String]
   }
 
   type Query {

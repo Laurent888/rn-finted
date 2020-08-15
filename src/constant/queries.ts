@@ -66,6 +66,7 @@ export const GET_LISTING = gql`
       description
       price
       images
+      category
       owner {
         id
         email
@@ -108,6 +109,7 @@ export const CREATE_LISTING = gql`
         email
       }
       images
+      category
     }
   }
 `;
