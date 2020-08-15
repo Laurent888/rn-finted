@@ -14,23 +14,27 @@ import { logout } from './utils';
 
 const cache = new InMemoryCache();
 
-cache.writeQuery({
-  query: IS_LOGGED_IN,
-  data: {
-    isLoggedIn: false,
-  },
-});
-
-cache.writeQuery({
-  query: GET_CURRENT_USER,
-  data: {
-    getCurrentUser: {
-      id: '',
-      email: '',
-      username: '',
+const resetAuth = () => {
+  cache.writeQuery({
+    query: IS_LOGGED_IN,
+    data: {
+      isLoggedIn: false,
     },
-  },
-});
+  });
+
+  cache.writeQuery({
+    query: GET_CURRENT_USER,
+    data: {
+      getCurrentUser: {
+        id: '',
+        email: '',
+        username: '',
+      },
+    },
+  });
+};
+
+resetAuth();
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   console.log(errorLink);
@@ -38,6 +42,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     graphQLErrors.forEach(({ message, locations, path }) => {
       if (message === 'Please login') {
         logout();
+        resetAuth();
       }
       console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
     });
@@ -50,7 +55,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const authLink = setContext(async (_, { headers }) => {
   const token = await AsyncStorage.getItem('TOKEN');
-
+  console.log('In auth link:', token);
   if (token) {
     cache.writeQuery({
       query: IS_LOGGED_IN,
@@ -59,12 +64,7 @@ const authLink = setContext(async (_, { headers }) => {
       },
     });
   } else {
-    cache.writeQuery({
-      query: IS_LOGGED_IN,
-      data: {
-        isLoggedIn: false,
-      },
-    });
+    resetAuth();
   }
   return {
     headers: {

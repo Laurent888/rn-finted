@@ -14,7 +14,7 @@ import { Screens } from '@routeTypes';
 const Profile = () => {
   const client = useApolloClient();
   const { data, loading, error } = useQuery(GET_ME, {
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'cache-first',
   });
 
   const n = useNavigation();

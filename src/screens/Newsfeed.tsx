@@ -19,6 +19,8 @@ import { Screens, TabNavigator } from '@routeTypes';
 
 const Newsfeed = ({ navigation }) => {
   const client: ApolloClient<any> = useApolloClient();
+
+  // Graphql Queries
   const { data, loading, error } = useQuery(IS_LOGGED_IN);
   const { data: data1 } = useQuery(GET_CURRENT_USER);
   const {
@@ -27,9 +29,28 @@ const Newsfeed = ({ navigation }) => {
     error: errorListing,
     refetch: refetchListings,
   } = useQuery(GET_LISTINGS, { fetchPolicy: 'cache-and-network' });
+  const { data: mData, loading: mLoading, error: mError } = useQuery(GET_ME, {
+    fetchPolicy: 'network-only',
+  });
 
-  if (listingLoading) return <LoadingIndicator />;
+  // Section
+  if (listingLoading || mLoading) return <LoadingIndicator />;
   if (errorListing) return <Error error={error} />;
+
+  if (!mError && mData) {
+    const { me } = mData;
+    client.writeQuery({
+      query: GET_CURRENT_USER,
+      data: {
+        getCurrentUser: {
+          email: me.email,
+          id: me.id,
+          username: me.username,
+        },
+      },
+    });
+  }
+
   const { getListings } = listingData;
 
   return (

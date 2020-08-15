@@ -1,5 +1,5 @@
-import { DefaultTheme } from "react-native-paper";
-import { Dimensions } from "react-native";
+import { DefaultTheme } from 'react-native-paper';
+import { Dimensions } from 'react-native';
 
 declare global {
   namespace ReactNativePaper {
@@ -9,6 +9,7 @@ declare global {
       mediumGrey: string;
       darkGrey: string;
       black: string;
+      primary: string;
     }
 
     interface Theme {
@@ -32,18 +33,18 @@ declare global {
   }
 }
 
-const { width: WIDTH, height: HEIGHT } = Dimensions.get("screen");
+const { width: WIDTH, height: HEIGHT } = Dimensions.get('screen');
 
 const theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    white: "#fff",
-    primary: "#e6b87f",
-    lightGrey: "#ccc",
-    mediumGrey: "#aaa",
-    darkGrey: "#575757",
-    black: "#333",
+    white: '#fff',
+    primary: '#e6b87f',
+    lightGrey: '#ccc',
+    mediumGrey: '#aaa',
+    darkGrey: '#575757',
+    black: '#333',
   },
   dimensions: {
     width: WIDTH,

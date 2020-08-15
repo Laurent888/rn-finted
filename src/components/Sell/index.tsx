@@ -60,8 +60,7 @@ const Sell = () => {
           n.navigate('loginModal');
           return;
         }
-        console.log(userId, 'userId');
-        console.log(values, 'VALUES');
+
         await createListing({
           variables: {
             newListing: {
