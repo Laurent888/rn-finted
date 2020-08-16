@@ -12,7 +12,10 @@ const Stack = createStackNavigator();
 const HomeNavigator = () => {
   return (
     <Stack.Navigator
-      screenOptions={{ cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }}
+      screenOptions={{
+        cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        headerTitleStyle: { textTransform: 'capitalize' },
+      }}
     >
       <Stack.Screen name={Screens.NEWSFEED} component={Newsfeed} />
       <Stack.Screen name={Screens.LISTING} component={ListingScreen} />

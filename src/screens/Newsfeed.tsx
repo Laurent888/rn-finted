@@ -55,7 +55,7 @@ const Newsfeed = ({ navigation }) => {
 
   return (
     <View style={{ backgroundColor: '#fff' }}>
-      <Button
+      {/* <Button
         onPress={async () => {
           const res = await AsyncStorage.getItem('TOKEN');
           console.log(data, res, 'TEST');
@@ -76,7 +76,7 @@ const Newsfeed = ({ navigation }) => {
         }}
       >
         DELETE CACHE
-      </Button>
+      </Button> */}
 
       <FlatList
         data={getListings}

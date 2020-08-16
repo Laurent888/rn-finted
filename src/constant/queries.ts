@@ -103,11 +103,7 @@ export const CREATE_LISTING = gql`
       title
       description
       price
-      owner {
-        id
-        username
-        email
-      }
+      ownerId
       images
       category
     }

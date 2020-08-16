@@ -8,6 +8,7 @@ import { TabNavigator, Screens } from '@routeTypes';
 import HomeNavigator from './BottomTab/HomeNavigator';
 import ProfileNavigator from './BottomTab/ProfileNavigator';
 import SellNavigator from './BottomTab/SellNavigator';
+import SearchNavigator from './BottomTab/SearchNavigator';
 import { useQuery } from '@apollo/client';
 import { IS_LOGGED_IN } from '@constants/queries';
 
@@ -65,7 +66,7 @@ const RootNavigator = () => {
       />
       <Tab.Screen
         name={TabNavigator.SEARCH_TAB}
-        component={HomeNavigator}
+        component={SearchNavigator}
         options={{ tabBarLabel: 'Search' }}
       />
       <Tab.Screen

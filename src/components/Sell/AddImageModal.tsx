@@ -65,5 +65,3 @@ const AddImageModal = ({ isVisible, onPress, onClose }: Props) => {
 };
 
 export default AddImageModal;
-
-const styles = StyleSheet.create({});

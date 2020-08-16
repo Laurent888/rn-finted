@@ -128,7 +128,7 @@ const Listing = () => {
             }}
           />
         </View>
-        <View style={s.contentContainer}>
+        <View>
           <UserInfoButton onPress={navigateToOtherProfile} username={username} />
 
           <ListingHeader title={title} price={price} />
@@ -165,5 +165,4 @@ const s = StyleSheet.create({
     height: '100%',
     resizeMode: 'cover',
   },
-  contentContainer: {},
 });

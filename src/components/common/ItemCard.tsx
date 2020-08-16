@@ -7,6 +7,7 @@ import { Listing } from '@constants/types';
 
 import theme from '../../style/theme';
 import Price from './Price';
+import Box from './Box';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('screen');
 
@@ -44,23 +45,24 @@ const ItemCard = ({ navigation, item }: Props) => {
   return (
     <TouchableOpacity onPress={navigateToListing} style={{ width: cardWidth }}>
       <Card elevation={0} style={[s.cardContainer]}>
-        <View style={s.header}>
+        <Box flexDirection="row" justifyContent="flex-start" px={[5, 5]} py={[7, 7]}>
           <LeftContent />
           <Text style={s.username}>{username}</Text>
-        </View>
+        </Box>
         <Card.Cover
           source={{
             uri: images[0],
           }}
         />
         <Card.Content style={{ paddingHorizontal: 4, paddingTop: 5 }}>
-          <View style={s.priceRow}>
+          <Box flexDirection="row" justifyContent="space-between">
             <Price price={price} />
-            <View style={s.likes}>
+            <Box flexDirection="row" justifyContent="center" py={[3, 3]}>
               <Icon name="heart" size={15} style={[s.icon, s.grey]} />
               <Text style={s.grey}>4</Text>
-            </View>
-          </View>
+            </Box>
+          </Box>
+
           <View>
             <Text style={[s.grey]} numberOfLines={1}>
               {title}
@@ -84,25 +86,6 @@ const s = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-  },
-  priceRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  likes: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 3,
   },
   icon: {
     marginRight: 3,

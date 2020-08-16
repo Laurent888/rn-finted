@@ -1,14 +1,19 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import SearchCategory from '@components/SearchCategory';
 
-const Stack = createStackNavigator();
+export type StackSearchParamsList = {
+  searchHome: undefined;
+};
 
-const Search = () => {
+const Stack = createStackNavigator<StackSearchParamsList>();
+
+const SearchNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen />
+      <Stack.Screen name="searchHome" component={SearchCategory} />
     </Stack.Navigator>
   );
 };
 
-export default Search;
+export default SearchNavigator;

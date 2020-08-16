@@ -6,10 +6,11 @@ import theme from '@theme';
 import { GET_ME, IS_LOGGED_IN, GET_CURRENT_USER } from '@constants/queries';
 import { useNavigation } from '@react-navigation/native';
 
+import { Screens } from '@routeTypes';
+import Box from '@components/common/Box';
 import ButtonWide from '../../components/common/ButtonWide';
 import LoadingIndicator from '../../components/common/LoadingIndicator';
 import Error from '../../components/common/Error';
-import { Screens } from '@routeTypes';
 
 const Profile = () => {
   const client = useApolloClient();
@@ -61,29 +62,29 @@ const Profile = () => {
         <ButtonWide label="Your guide to Finted" onPress={() => console.log('')} />
       </View>
 
-      <View style={s.container}>
+      <Box my={[0, 10]} style={s.container}>
         <ButtonWide label="Favorite items" onPress={() => console.log('')} />
         <ButtonWide label="Personalisation" onPress={() => console.log('')} />
         <ButtonWide label="Balance" onPress={() => console.log('')} />
         <ButtonWide label="My orders" onPress={() => console.log('')} />
         <ButtonWide label="Bundle discounts" onPress={() => console.log('')} />
-      </View>
+      </Box>
 
-      <View style={s.container}>
+      <Box my={[0, 10]} style={s.container}>
         <ButtonWide label="Forum" onPress={() => console.log('')} />
-      </View>
+      </Box>
 
-      <View style={s.container}>
+      <Box my={[0, 10]} style={s.container}>
         <ButtonWide label="Invite friends" onPress={() => console.log('')} />
-      </View>
-      <View style={s.container}>
+      </Box>
+      <Box my={[0, 10]} style={s.container}>
         <ButtonWide label="Holiday mode" onPress={() => console.log('')} />
-      </View>
-      <View style={s.container}>
+      </Box>
+      <Box my={[0, 10]} style={s.container}>
         <ButtonWide label="Settings" onPress={() => n.navigate(Screens.SETTINGS)} />
         <ButtonWide label="About Finted" onPress={() => console.log('')} />
         <ButtonWide label="Help center" onPress={() => console.log('')} />
-      </View>
+      </Box>
     </ScrollView>
   );
 };
@@ -93,7 +94,6 @@ export default Profile;
 const s = StyleSheet.create({
   container: {
     backgroundColor: theme.colors.white,
-    marginBottom: 10,
   },
   profileBtn: {
     flexDirection: 'row',
