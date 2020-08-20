@@ -17,6 +17,8 @@ const typeDefs = gql`
     ownerId: String
     owner: User
     category: [String]
+    createdAt: String
+    updatedAt: String
   }
 
   input CreateListingInput {
@@ -33,7 +35,7 @@ const typeDefs = gql`
     getUsers: [User]
     getUser(id: ID!): User
     me: User
-    getListings(ownerId: String): [Listing]
+    getListings(ownerId: String, keyword: String): [Listing]
     getListing(id: ID!): Listing
     refreshToken(token: String): String
   }
@@ -44,6 +46,7 @@ const typeDefs = gql`
     deleteUser(id: ID): String
     createListing(newListing: CreateListingInput): Listing
     deleteListing(id: ID): String
+    deleteAllListings: String
   }
 `;
 

@@ -1,17 +1,19 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { NavigationProp } from '@react-navigation/native';
 
 import ButtonWide from '../../components/common/ButtonWide';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { Screens } from '@routeTypes';
+import { formatDate } from '../../lib/utils';
 
 interface Props {
-  category: [string];
+  category: [string, string];
+  createdAt: string;
   navigation: any;
 }
 
-const DetailsButtons = ({ category, navigation }: Props) => {
+const DetailsButtons = ({ category, navigation, createdAt }: Props) => {
+  const formattedDate = formatDate(createdAt);
+
   return (
     <>
       <ButtonWide
@@ -22,7 +24,7 @@ const DetailsButtons = ({ category, navigation }: Props) => {
       <ButtonWide label="Size" desc="L / 40 /12" />
       <ButtonWide label="Colour" desc="Purple, Red" />
       <ButtonWide label="Views" desc="21" />
-      <ButtonWide label="Added" desc="Today 6:40am" />
+      <ButtonWide label="Added" desc={formattedDate} />
       <ButtonWide label="People Interested" desc="0" />
     </>
   );

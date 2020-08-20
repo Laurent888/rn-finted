@@ -29,6 +29,8 @@ const listingSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
   },
+  createdAt: { type: String, required: true },
+  updatedAt: { type: String },
 });
 
 module.exports = mongoose.model('listing', listingSchema);

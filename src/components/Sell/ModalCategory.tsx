@@ -6,7 +6,6 @@ import theme from '@theme';
 import { categories } from '../../constant/categories';
 
 import ButtonWide from '../../components/common/ButtonWide';
-import ModalSubCategories from './ModalSubCategories';
 
 interface Props {
   isVisible: boolean;
@@ -39,8 +38,6 @@ const ModalCategory = ({ isVisible, cancel, onConfirm }: Props) => {
     };
   }, [scrollRef.current, categoryArray]);
 
-  console.log(step, 'STEP');
-
   const nextStep = () => {
     if (step === 0) {
       setStep((prev) => prev + 1);
@@ -69,7 +66,7 @@ const ModalCategory = ({ isVisible, cancel, onConfirm }: Props) => {
         }}
       />
     ));
-  console.log(categoryArray, 'categoryArray');
+
   const renderSubCategories = (category: string) => {
     return categories[category].values.map((subCategory) => (
       <ButtonWide
@@ -101,7 +98,7 @@ const ModalCategory = ({ isVisible, cancel, onConfirm }: Props) => {
       animationOut="fadeOut"
     >
       <ScrollView horizontal pagingEnabled ref={scrollRef}>
-        <View style={{ flex: 1, backgroundColor: 'lightblue' }}>
+        <View style={{ flex: 1 }}>
           <View style={s.cancel}>
             <TouchableOpacity onPress={() => previousStep()}>
               <Text>Cancel</Text>
@@ -109,7 +106,7 @@ const ModalCategory = ({ isVisible, cancel, onConfirm }: Props) => {
           </View>
           {renderCategories()}
         </View>
-        <View style={{ flex: 1, backgroundColor: 'lightgreen' }}>
+        <View style={{ flex: 1 }}>
           <View style={s.cancel}>
             <TouchableOpacity onPress={() => previousStep()}>
               <Text>Back</Text>

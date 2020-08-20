@@ -5,5 +5,6 @@ export interface Listing {
   price: number;
   images: [string];
   owner: string;
+  ownerId: string;
   category: [string];
 }

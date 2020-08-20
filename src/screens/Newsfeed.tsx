@@ -1,36 +1,36 @@
 import React from 'react';
 import { StyleSheet, View, FlatList, AsyncStorage } from 'react-native';
+import { NavigationProp, RouteProp } from '@react-navigation/native';
+import { HomeStackParamsList } from '@routeTypes';
+import { useQuery, useApolloClient, ApolloClient } from '@apollo/client';
 
 import ItemCard from '../components/common/ItemCard';
-import { useQuery, useApolloClient, ApolloClient } from '@apollo/client';
 import LoadingIndicator from '../components/common/LoadingIndicator';
 import Error from '../components/common/Error';
-import {
-  GET_ME,
-  GET_USERS,
-  IS_LOGGED_IN,
-  GET_CURRENT_USER,
-  GET_LISTINGS,
-} from '../constant/queries';
+import { GET_ME, IS_LOGGED_IN, GET_CURRENT_USER, GET_LISTINGS } from '../constant/queries';
 import { Button } from 'react-native-paper';
 import { logout } from '../lib/utils';
-import { useLinkProps, StackActions } from '@react-navigation/native';
-import { Screens, TabNavigator } from '@routeTypes';
 
-const Newsfeed = ({ navigation }) => {
+interface Props {
+  navigation: NavigationProp<HomeStackParamsList, 'home'>;
+}
+
+const Newsfeed = ({ navigation }: Props) => {
   const client: ApolloClient<any> = useApolloClient();
 
   // Graphql Queries
   const { data, loading, error } = useQuery(IS_LOGGED_IN);
   const { data: data1 } = useQuery(GET_CURRENT_USER);
+
   const {
     data: listingData,
     loading: listingLoading,
     error: errorListing,
     refetch: refetchListings,
-  } = useQuery(GET_LISTINGS, { fetchPolicy: 'cache-and-network' });
+  } = useQuery(GET_LISTINGS, { fetchPolicy: 'cache-first' });
+
   const { data: mData, loading: mLoading, error: mError } = useQuery(GET_ME, {
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'cache-first',
   });
 
   // Section
@@ -55,7 +55,7 @@ const Newsfeed = ({ navigation }) => {
 
   return (
     <View style={{ backgroundColor: '#fff' }}>
-      {/* <Button
+      <Button
         onPress={async () => {
           const res = await AsyncStorage.getItem('TOKEN');
           console.log(data, res, 'TEST');
@@ -76,7 +76,7 @@ const Newsfeed = ({ navigation }) => {
         }}
       >
         DELETE CACHE
-      </Button> */}
+      </Button>
 
       <FlatList
         data={getListings}
@@ -101,5 +101,3 @@ const Newsfeed = ({ navigation }) => {
 };
 
 export default Newsfeed;
-
-const styles = StyleSheet.create({});

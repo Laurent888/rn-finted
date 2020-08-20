@@ -34,6 +34,7 @@ const ItemCard = ({ navigation, item }: Props) => {
     price,
     images,
     id,
+    createdAt,
     owner: { username },
   } = item;
   const cardWidth = WIDTH / 2 - 1.5 * 10;

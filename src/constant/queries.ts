@@ -43,8 +43,8 @@ export const GET_CURRENT_USER = gql`
 `;
 
 export const GET_LISTINGS = gql`
-  query GetListings($ownerId: String) {
-    getListings(ownerId: $ownerId) {
+  query GetListings($ownerId: String, $keyword: String) {
+    getListings(ownerId: $ownerId, keyword: $keyword) {
       id
       title
       description
@@ -54,6 +54,8 @@ export const GET_LISTINGS = gql`
       owner {
         username
       }
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -72,6 +74,8 @@ export const GET_LISTING = gql`
         email
         username
       }
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -106,6 +110,8 @@ export const CREATE_LISTING = gql`
       ownerId
       images
       category
+      createdAt
+      updatedAt
     }
   }
 `;

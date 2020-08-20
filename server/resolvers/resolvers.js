@@ -18,11 +18,19 @@ const resolvers = {
       }
     },
 
-    getListings: async (_, { ownerId }, ctx) => {
+    getListings: async (_, { ownerId, keyword }, ctx) => {
       let res;
+
+      // GET ALL LISTINGS
       if (!ownerId) {
-        res = await Listing.find().populate('owner');
-      } else {
+        if (!keyword) {
+          res = await Listing.find().populate('owner');
+        } else {
+          res = await Listing.find({ title: { $regex: keyword, $options: 'i' } }).populate('owner');
+        }
+      }
+      // GET OWNERS LISTINGS
+      else {
         res = await Listing.find({ ownerId }).populate('owner');
       }
       return res;
@@ -99,6 +107,7 @@ const resolvers = {
     createListing: async (_, { newListing }, ctx) => {
       const { title, price, description, images, owner, ownerId, category } = newListing;
 
+      const createdAt = new Date().toISOString();
       const newListingToAdd = {
         title,
         price,
@@ -107,6 +116,7 @@ const resolvers = {
         owner,
         ownerId,
         category,
+        createdAt,
       };
       const res = await Listing.create(newListingToAdd);
       return res;
@@ -119,6 +129,15 @@ const resolvers = {
       await Listing.findByIdAndDelete(id);
 
       return 'Listing deleted';
+    },
+    deleteAllListings: async () => {
+      try {
+        const { deletedCount } = await Listing.deleteMany({});
+
+        return `Successfully deleted ${deletedCount} documents`;
+      } catch (error) {
+        throw new Error('there was an error');
+      }
     },
   },
 };

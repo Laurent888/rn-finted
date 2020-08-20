@@ -19,7 +19,7 @@ const RootNavigator = () => {
 
   const { data } = useQuery(IS_LOGGED_IN);
 
-  const listenersTab = (navigation, tab, screen) => ({
+  const listenersTab = (navigation: any, tab: string, screen: string) => ({
     tabPress: (e) => {
       e.preventDefault();
       if (!data.isLoggedIn) {
@@ -57,38 +57,23 @@ const RootNavigator = () => {
       tabBarOptions={{
         activeTintColor: t.colors.primary,
         inactiveTintColor: t.colors.lightGrey,
+        keyboardHidesTabBar: true,
       }}
     >
-      <Tab.Screen
-        name={TabNavigator.HOME_TAB}
-        component={HomeNavigator}
-        options={{ tabBarLabel: 'Home' }}
-      />
-      <Tab.Screen
-        name={TabNavigator.SEARCH_TAB}
-        component={SearchNavigator}
-        options={{ tabBarLabel: 'Search' }}
-      />
-      <Tab.Screen
-        name={TabNavigator.SELL_TAB}
-        component={SellNavigator}
-        options={{ tabBarLabel: 'Sell' }}
-      />
+      <Tab.Screen name={TabNavigator.HOME_TAB} component={HomeNavigator} options={{ tabBarLabel: 'Home' }} />
+      <Tab.Screen name={TabNavigator.SEARCH_TAB} component={SearchNavigator} options={{ tabBarLabel: 'Search' }} />
+      <Tab.Screen name={TabNavigator.SELL_TAB} component={SellNavigator} options={{ tabBarLabel: 'Sell' }} />
       <Tab.Screen
         name={TabNavigator.INBOX_TAB}
         component={HomeNavigator}
         options={{ tabBarLabel: 'Inbox' }}
-        listeners={({ navigation }) =>
-          listenersTab(navigation, TabNavigator.HOME_TAB, Screens.HOME)
-        }
+        listeners={({ navigation }) => listenersTab(navigation, TabNavigator.HOME_TAB, Screens.HOME)}
       />
       <Tab.Screen
         name={TabNavigator.PROFILE_TAB}
         component={ProfileNavigator}
         options={{ tabBarLabel: 'Profile' }}
-        listeners={({ navigation }) =>
-          listenersTab(navigation, TabNavigator.PROFILE_TAB, Screens.PROFILE)
-        }
+        listeners={({ navigation }) => listenersTab(navigation, TabNavigator.PROFILE_TAB, Screens.PROFILE)}
       />
     </Tab.Navigator>
   );

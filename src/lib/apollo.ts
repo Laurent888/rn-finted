@@ -1,15 +1,9 @@
-import {
-  ApolloClient,
-  createHttpLink,
-  InMemoryCache,
-  ApolloLink,
-  makeVar,
-  HttpLink,
-} from '@apollo/client';
+import { ApolloClient, createHttpLink, InMemoryCache, ApolloLink, HttpLink } from '@apollo/client';
 import { onError } from '@apollo/link-error';
 import { setContext } from '@apollo/link-context';
 import { AsyncStorage } from 'react-native';
 import { IS_LOGGED_IN, GET_CURRENT_USER } from '@constants/queries';
+
 import { logout } from './utils';
 
 const cache = new InMemoryCache();
@@ -75,7 +69,7 @@ const authLink = setContext(async (_, { headers }) => {
 });
 
 const httpLink = new HttpLink({
-  uri: 'http://192.168.1.6:4000/',
+  uri: 'http://192.168.0.39:4000/',
   credentials: 'same-origin',
 });
 

@@ -1,25 +1,27 @@
 import React, { useState, useLayoutEffect } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { useRoute, useNavigation, RouteProp, NavigationProp } from '@react-navigation/native';
 import theme from '@theme';
 import { useQuery, useMutation } from '@apollo/client';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import { Menu, Provider } from 'react-native-paper';
+import { Screens, HomeStackParamsList } from '@routeTypes';
+import UserInfoButton from '@components/common/UserInfoButton';
+import { GET_LISTING, GET_CURRENT_USER, DELETE_LISTING, GET_LISTINGS } from '@constants/queries';
 
 import ListingHeader from './ListingHeader';
 import ItemDescription from './ItemDescription';
 import DetailsButtons from './DetailsButtons';
 import Postage from './Postage';
-import { GET_LISTING, GET_CURRENT_USER, DELETE_LISTING, GET_LISTINGS } from '@constants/queries';
 import LoadingIndicator from '../../components/common/LoadingIndicator';
 import Error from '../../components/common/Error';
-import { Avatar } from 'react-native-paper';
-import { Screens } from '@routeTypes';
-import UserInfoButton from '@components/common/UserInfoButton';
+
+type ListingRouteProp = RouteProp<HomeStackParamsList, 'listing'>;
+type ListingNavigationProp = NavigationProp<HomeStackParamsList, 'listing'>;
 
 const Listing = () => {
-  const { params } = useRoute();
-  const n = useNavigation();
+  const { params } = useRoute<ListingRouteProp>();
+  const n = useNavigation<ListingNavigationProp>();
   const [currentUserOwner, setCurrentUserOwner] = useState(false);
   const [visible, setVisible] = useState(false);
 
@@ -61,7 +63,7 @@ const Listing = () => {
   }, [currentUserOwner]);
 
   const [deleteListing] = useMutation(DELETE_LISTING, {
-    variables: { id: params.id },
+    variables: { id: params?.id },
     update(cache) {
       const listings = cache.readQuery({ query: GET_LISTINGS });
       const updatedListings = listings.getListings.filter((item) => item.id !== params.id);
@@ -78,8 +80,8 @@ const Listing = () => {
   });
   const { data: cData } = useQuery(GET_CURRENT_USER);
   const { data, loading, error } = useQuery(GET_LISTING, {
-    variables: { id: params.id },
-    fetchPolicy: 'cache-and-network',
+    variables: { id: params?.id },
+    fetchPolicy: 'cache-first',
     onCompleted() {
       if (data.getListing.owner.id === cData.getCurrentUser.id) {
         setCurrentUserOwner(true);
@@ -110,13 +112,14 @@ const Listing = () => {
     description,
     images,
     category,
+    createdAt,
     owner: { username, id: ownerId },
   } = getListing;
 
   const navigateToOtherProfile = () => {
     n.push(Screens.OTHER_PROFILE, { id: params.id, username, ownerId });
   };
-
+  console.log(createdAt, 'CreatedAt');
   return (
     <Provider>
       <ScrollView>
@@ -135,7 +138,7 @@ const Listing = () => {
 
           <ItemDescription description={description} />
 
-          <DetailsButtons category={category} navigation={n} />
+          <DetailsButtons category={category} createdAt={createdAt} navigation={n} />
 
           <Postage price="23e" />
         </View>

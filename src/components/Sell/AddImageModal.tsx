@@ -18,7 +18,7 @@ const AddImageModal = ({ isVisible, onPress, onClose }: Props) => {
   const [imageUrl, setImageUrl] = useState('');
 
   useEffect(() => {
-    setImageUrl(mockPhoto[Math.floor(Math.random() * mockPhoto.length)].name);
+    setImageUrl(mockPhoto[Math.ceil(Math.random() * mockPhoto.length)].name);
   }, [isVisible]);
 
   return (

@@ -23,6 +23,7 @@ interface BoxProps {
   alignItems?: AlignmentType;
   flexDirection?: 'row' | 'column';
   style?: ViewStyle;
+  stretch?: boolean;
 }
 
 const getPaddings = (px: ArrayMargin, py: ArrayMargin) => {
@@ -77,11 +78,13 @@ const Box = ({
   alignItems = 'flex-start',
   style,
   children,
+  stretch,
 }: BoxProps) => {
   return (
     <View
       style={[
         s.container,
+        { width: stretch ? '100%' : 'auto' },
         getPaddings(px, py),
         getMargins(mx, my),
         getFlexType(flexDirection, justifyContent, alignItems),

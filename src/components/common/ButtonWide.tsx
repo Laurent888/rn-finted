@@ -65,6 +65,7 @@ const s = StyleSheet.create({
     fontSize: theme.fontSize.normal,
     color: theme.colors.black,
     fontWeight: '600',
+    textTransform: 'capitalize',
   },
   desc: {
     fontSize: theme.fontSize.normal,

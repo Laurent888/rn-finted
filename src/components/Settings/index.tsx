@@ -1,11 +1,11 @@
-import React from "react";
-import { View, ScrollView } from "react-native";
-import { useNavigation, StackActions } from "@react-navigation/native";
-import { useApolloClient, ApolloClient } from "@apollo/client";
-import { IS_LOGGED_IN, GET_CURRENT_USER } from "@constants/queries";
+import React from 'react';
+import { View, ScrollView } from 'react-native';
+import { useNavigation, StackActions } from '@react-navigation/native';
+import { useApolloClient, ApolloClient } from '@apollo/client';
+import { IS_LOGGED_IN, GET_CURRENT_USER } from '@constants/queries';
 
-import ButtonWide from "../../components/common/ButtonWide";
-import { logout } from "../../lib/utils";
+import ButtonWide from '../../components/common/ButtonWide';
+import { logout } from '../../lib/utils';
 
 const Settings = () => {
   const n = useNavigation();
@@ -13,7 +13,6 @@ const Settings = () => {
 
   const handleLogOut = async () => {
     await logout();
-    n.dispatch(StackActions.replace("root"));
     await client.writeQuery({
       query: IS_LOGGED_IN,
       data: {
@@ -24,12 +23,13 @@ const Settings = () => {
       query: GET_CURRENT_USER,
       data: {
         getCurrentUser: {
-          id: "",
-          email: "",
-          username: "",
+          id: '',
+          email: '',
+          username: '',
         },
       },
     });
+    n.dispatch(StackActions.replace('root'));
   };
 
   return (

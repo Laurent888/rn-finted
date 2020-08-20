@@ -8,15 +8,16 @@ import { SearchCategoriesProps } from '@constants/categories';
 
 interface Props {
   categoryType: keyof SearchCategoriesProps;
+  onPress: () => void;
 }
 
-const TabCategoryList = ({ categoryType }: Props) => {
+const TabCategoryList = ({ categoryType, onPress }: Props) => {
   const categoriesToRender = searchCategories[categoryType];
 
   return (
     <Box>
       {categoriesToRender.values.map((item: string) => (
-        <ButtonWide key={item} label={capitalize(item)} onPress={() => console.log('')} />
+        <ButtonWide key={item} label={capitalize(item)} onPress={onPress} />
       ))}
     </Box>
   );
