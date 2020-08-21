@@ -1,27 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
-import { Avatar } from 'react-native-paper';
+import { Avatar, Button } from 'react-native-paper';
 import { useQuery, useApolloClient } from '@apollo/client';
 import theme from '@theme';
 import { GET_ME, IS_LOGGED_IN, GET_CURRENT_USER } from '@constants/queries';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 
-import { Screens } from '@routeTypes';
+import { Screens, TabNavigator } from '@routeTypes';
 import Box from '@components/common/Box';
 import ButtonWide from '../../components/common/ButtonWide';
 import LoadingIndicator from '../../components/common/LoadingIndicator';
 import Error from '../../components/common/Error';
 
 const Profile = () => {
+  console.log('In Profile screen');
   const client = useApolloClient();
+  const n = useNavigation();
+
   const { data, loading, error } = useQuery(GET_ME, {
     fetchPolicy: 'cache-first',
   });
 
-  const n = useNavigation();
+  const { data: lData } = useQuery(IS_LOGGED_IN);
 
   if (loading) return <LoadingIndicator />;
-  if (error) return <Error error={error} />;
+  if (error) {
+    return <Error />;
+  }
+
+  console.log('In Profile Screen, Is Logged in', lData, 'GetMe data', data);
 
   const { me } = data;
   client.writeQuery({
@@ -34,15 +41,13 @@ const Profile = () => {
       },
     },
   });
-  console.log(me, 'IN PROFILE');
+  console.log(me.username, 'IN PROFILE');
   return (
     <ScrollView>
       <View style={s.container}>
         <TouchableOpacity
           style={s.profileBtn}
-          onPress={() =>
-            n.navigate(Screens.OTHER_PROFILE, { ownerId: me.id, username: me.username })
-          }
+          onPress={() => n.navigate(Screens.OTHER_PROFILE, { ownerId: me.id, username: me.username })}
         >
           <View style={s.avatar}>
             <Avatar.Image

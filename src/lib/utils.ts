@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 
 export const logout = async () => {
   await AsyncStorage.removeItem('TOKEN');
+  console.log('Token removed, in Logout');
 };
 
 export const capitalize = (string: string) => {

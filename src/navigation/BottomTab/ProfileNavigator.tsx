@@ -1,25 +1,31 @@
 import React, { useEffect } from 'react';
+import { View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useQuery } from '@apollo/client';
 
 import ProfileScreen from '@screens/ProfileScreen';
 import NotLoggedInScreen from '@screens/NotLoggedInScreen';
 import SettingsScreen from '@screens/SettingsScreen';
+import OtherProfile from '@components/OtherProfile';
 
 import { Screens } from '@routeTypes';
 
 import { IS_LOGGED_IN } from '../../constant/queries';
-import LoadingIndicator from '../../components/common/LoadingIndicator';
-import Error from '../../components/common/Error';
-import OtherProfile from '@components/OtherProfile';
+import LoginNavigator from '../LoginNavigator';
 
 const Stack = createStackNavigator();
 
 const ProfileNavigator = () => {
-  const { data, loading, error } = useQuery(IS_LOGGED_IN);
+  const { data, refetch } = useQuery(IS_LOGGED_IN);
+  console.log('In Profile Navigator', data);
 
-  if (loading) return <LoadingIndicator />;
-  if (error) return <Error error={error} />;
+  useEffect(() => {
+    refetch();
+  }, []);
+
+  if (!data || data.isLoggedIn === false) {
+    return <LoginNavigator />;
+  }
 
   return (
     <Stack.Navigator>

@@ -1,14 +1,15 @@
-import React from "react";
-import { View, Text } from "react-native";
+import React from 'react';
+import { View, Text } from 'react-native';
 
 interface Props {
-  error: any;
+  error?: any;
 }
 
 const Error = ({ error }: Props) => {
+  console.log(error);
   return (
-    <View style={{ flex: 1, alignItems: "center", paddingTop: 100 }}>
-      <Text>{error.message}</Text>
+    <View style={{ flex: 1, alignItems: 'center', paddingTop: 100 }}>
+      <Text>ERROR</Text>
     </View>
   );
 };

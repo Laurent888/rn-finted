@@ -59,6 +59,7 @@ const resolvers = {
         id,
         email: user.email,
         username: user.username,
+        userPicture: user.userPicture,
       };
     },
   },

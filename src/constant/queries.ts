@@ -53,6 +53,7 @@ export const GET_LISTINGS = gql`
       ownerId
       owner {
         username
+        userPicture
       }
       createdAt
       updatedAt
@@ -73,6 +74,7 @@ export const GET_LISTING = gql`
         id
         email
         username
+        userPicture
       }
       createdAt
       updatedAt

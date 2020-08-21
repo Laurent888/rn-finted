@@ -18,6 +18,7 @@ const RootNavigator = () => {
   const t = useTheme();
 
   const { data } = useQuery(IS_LOGGED_IN);
+  console.log('In root navigator, Is logged in: ', data);
 
   const listenersTab = (navigation: any, tab: string, screen: string) => ({
     tabPress: (e) => {

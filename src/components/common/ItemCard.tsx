@@ -11,12 +11,14 @@ import Box from './Box';
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get('screen');
 
-const LeftContent = (props) => (
+interface LeftContentProps {
+  imageUrl: string;
+}
+
+const LeftContent = ({ imageUrl }: LeftContentProps) => (
   <Avatar.Image
-    {...props}
     source={{
-      uri:
-        'https://images.unsplash.com/photo-1593642531955-b62e17bdaa9c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
+      uri: imageUrl,
     }}
     size={24}
     style={{ marginRight: 10 }}
@@ -35,8 +37,9 @@ const ItemCard = ({ navigation, item }: Props) => {
     images,
     id,
     createdAt,
-    owner: { username },
+    owner: { username, userPicture },
   } = item;
+
   const cardWidth = WIDTH / 2 - 1.5 * 10;
 
   const navigateToListing = () => {
@@ -47,7 +50,7 @@ const ItemCard = ({ navigation, item }: Props) => {
     <TouchableOpacity onPress={navigateToListing} style={{ width: cardWidth }}>
       <Card elevation={0} style={[s.cardContainer]}>
         <Box flexDirection="row" justifyContent="flex-start" px={[5, 5]} py={[7, 7]}>
-          <LeftContent />
+          <LeftContent imageUrl={userPicture} />
           <Text style={s.username}>{username}</Text>
         </Box>
         <Card.Cover

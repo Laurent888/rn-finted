@@ -25,7 +25,7 @@ export enum Screens {
 export type HomeStackParamsList = {
   home: undefined;
   listing: { id: string };
-  otherProfile: undefined;
+  otherProfile: { id: string; username: string; ownerId: string; userPicture: string };
 };
 
 export type StackSearchParamsList = {

@@ -15,6 +15,7 @@ import DetailsButtons from './DetailsButtons';
 import Postage from './Postage';
 import LoadingIndicator from '../../components/common/LoadingIndicator';
 import Error from '../../components/common/Error';
+import { ListingProp } from '@constants/types';
 
 type ListingRouteProp = RouteProp<HomeStackParamsList, 'listing'>;
 type ListingNavigationProp = NavigationProp<HomeStackParamsList, 'listing'>;
@@ -65,8 +66,8 @@ const Listing = () => {
   const [deleteListing] = useMutation(DELETE_LISTING, {
     variables: { id: params?.id },
     update(cache) {
-      const listings = cache.readQuery({ query: GET_LISTINGS });
-      const updatedListings = listings.getListings.filter((item) => item.id !== params.id);
+      const listings: [ListingProp] = cache.readQuery({ query: GET_LISTINGS });
+      const updatedListings = listings?.getListings.filter((item) => item.id !== params.id);
       cache.writeQuery({
         query: GET_LISTINGS,
         data: {
@@ -89,19 +90,6 @@ const Listing = () => {
     },
   });
 
-  useLayoutEffect(() => {
-    if (currentUserOwner) {
-      n.setOptions({
-        headerRight: () => (
-          <TouchableOpacity onPress={openMenu}>
-            <Icon name="menu-down" size={28} color="black" />
-          </TouchableOpacity>
-        ),
-        headerRightContainerStyle: { paddingHorizontal: 10 },
-      });
-    }
-  }, [currentUserOwner]);
-
   if (loading) return <LoadingIndicator />;
   if (error) return <Error error={error} />;
 
@@ -113,13 +101,13 @@ const Listing = () => {
     images,
     category,
     createdAt,
-    owner: { username, id: ownerId },
+    owner: { username, id: ownerId, userPicture },
   } = getListing;
 
   const navigateToOtherProfile = () => {
-    n.push(Screens.OTHER_PROFILE, { id: params.id, username, ownerId });
+    n.push(Screens.OTHER_PROFILE, { id: params.id, username, ownerId, userPicture });
   };
-  console.log(createdAt, 'CreatedAt');
+
   return (
     <Provider>
       <ScrollView>
@@ -132,7 +120,7 @@ const Listing = () => {
           />
         </View>
         <View>
-          <UserInfoButton onPress={navigateToOtherProfile} username={username} />
+          <UserInfoButton onPress={navigateToOtherProfile} username={username} userPicture={userPicture} />
 
           <ListingHeader title={title} price={price} />
 
@@ -146,11 +134,7 @@ const Listing = () => {
 
       <Menu visible={visible} onDismiss={closeMenu} anchor={{ x: 220, y: 0 }}>
         <Menu.Item onPress={() => {}} title="Edit" />
-        <Menu.Item
-          onPress={handleDelete}
-          title="Delete"
-          titleStyle={{ color: theme.colors.error }}
-        />
+        <Menu.Item onPress={handleDelete} title="Delete" titleStyle={{ color: theme.colors.error }} />
       </Menu>
     </Provider>
   );

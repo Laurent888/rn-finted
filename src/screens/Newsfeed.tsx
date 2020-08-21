@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, FlatList, AsyncStorage } from 'react-native';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
-import { HomeStackParamsList } from '@routeTypes';
+import { HomeStackParamsList, TabNavigator, Screens } from '@routeTypes';
 import { useQuery, useApolloClient, ApolloClient } from '@apollo/client';
 
 import ItemCard from '../components/common/ItemCard';
@@ -16,10 +16,11 @@ interface Props {
 }
 
 const Newsfeed = ({ navigation }: Props) => {
+  console.log('In News Feed');
   const client: ApolloClient<any> = useApolloClient();
 
   // Graphql Queries
-  const { data, loading, error } = useQuery(IS_LOGGED_IN);
+  const { data, error } = useQuery(IS_LOGGED_IN);
   const { data: data1 } = useQuery(GET_CURRENT_USER);
 
   const {
@@ -29,33 +30,15 @@ const Newsfeed = ({ navigation }: Props) => {
     refetch: refetchListings,
   } = useQuery(GET_LISTINGS, { fetchPolicy: 'cache-first' });
 
-  const { data: mData, loading: mLoading, error: mError } = useQuery(GET_ME, {
-    fetchPolicy: 'cache-first',
-  });
-
   // Section
-  if (listingLoading || mLoading) return <LoadingIndicator />;
-  if (errorListing) return <Error error={error} />;
-
-  if (!mError && mData) {
-    const { me } = mData;
-    client.writeQuery({
-      query: GET_CURRENT_USER,
-      data: {
-        getCurrentUser: {
-          email: me.email,
-          id: me.id,
-          username: me.username,
-        },
-      },
-    });
-  }
+  if (listingLoading) return <LoadingIndicator />;
+  if (errorListing) return <Error />;
 
   const { getListings } = listingData;
 
   return (
     <View style={{ backgroundColor: '#fff' }}>
-      <Button
+      {/* <Button
         onPress={async () => {
           const res = await AsyncStorage.getItem('TOKEN');
           console.log(data, res, 'TEST');
@@ -73,10 +56,24 @@ const Newsfeed = ({ navigation }: Props) => {
               isLoggedIn: false,
             },
           });
+          client.writeQuery({
+            query: GET_CURRENT_USER,
+            data: {
+              getCurrentUser: {
+                email: '',
+                id: '',
+                username: '',
+              },
+            },
+          });
         }}
       >
         DELETE CACHE
       </Button>
+
+      <Button onPress={() => navigation.navigate(TabNavigator.PROFILE_TAB, { screen: Screens.PROFILE })}>
+        To Profile
+      </Button> */}
 
       <FlatList
         data={getListings}

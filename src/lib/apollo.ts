@@ -30,8 +30,16 @@ const resetAuth = () => {
 
 resetAuth();
 
+export const logoutReset = async () => {
+  await client.clearStore();
+  await client.resetStore();
+  console.log('Stored Reset, In logoutReset before');
+  resetAuth();
+  console.log('Stored Reset, In logoutReset');
+};
+
 const errorLink = onError(({ graphQLErrors, networkError }) => {
-  console.log(errorLink);
+  console.log('In Error link');
   if (graphQLErrors) {
     graphQLErrors.forEach(({ message, locations, path }) => {
       if (message === 'Please login') {
@@ -49,7 +57,8 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const authLink = setContext(async (_, { headers }) => {
   const token = await AsyncStorage.getItem('TOKEN');
-  console.log('In auth link:', token);
+
+  console.log('In auth link token:', token ? 'YES' : 'NO');
   if (token) {
     cache.writeQuery({
       query: IS_LOGGED_IN,
@@ -69,7 +78,7 @@ const authLink = setContext(async (_, { headers }) => {
 });
 
 const httpLink = new HttpLink({
-  uri: 'http://192.168.0.39:4000/',
+  uri: 'http://192.168.1.6:4000/',
   credentials: 'same-origin',
 });
 
