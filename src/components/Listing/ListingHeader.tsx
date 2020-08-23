@@ -4,13 +4,15 @@ import theme from '@theme';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import Button from '../common/Button';
 import Price from '@components/common/Price';
+import Box from '@components/common/Box';
 
 interface Props {
   title: string;
   price: number;
+  handleBuy: () => void;
 }
 
-const ListingHeader = ({ title, price }: Props) => {
+const ListingHeader = ({ title, price, handleBuy }: Props) => {
   return (
     <View style={s.container}>
       <View>
@@ -24,10 +26,12 @@ const ListingHeader = ({ title, price }: Props) => {
           Ask Seller
         </Button>
 
-        <Button mode="contained">Buy Now</Button>
+        <Button mode="contained" onPress={handleBuy}>
+          Buy Now
+        </Button>
       </View>
 
-      <View style={s.refund}>
+      <Box flexDirection="row" alignItems="center" py={[0, 30]}>
         <View style={s.iconContainer}>
           <Icon name="shield-check" size={40} color={theme.colors.primary} />
         </View>
@@ -35,7 +39,7 @@ const ListingHeader = ({ title, price }: Props) => {
           <Text>Be covered by our refund policy</Text>
           <Text>Learn more about Buyer Protection</Text>
         </View>
-      </View>
+      </Box>
 
       <View style={s.favoriteShare}>
         <Button style={s.btn}>Favorite</Button>
@@ -60,11 +64,6 @@ const s = StyleSheet.create({
   price: {},
   buttons: {
     paddingVertical: 30,
-  },
-  refund: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingBottom: 30,
   },
   iconContainer: {
     marginRight: 15,

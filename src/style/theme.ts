@@ -10,6 +10,7 @@ declare global {
       darkGrey: string;
       black: string;
       primary: string;
+      success: string;
     }
 
     interface Theme {
@@ -45,6 +46,7 @@ const theme = {
     mediumGrey: '#aaa',
     darkGrey: '#575757',
     black: '#333',
+    success: '#1aa32c',
   },
   dimensions: {
     width: WIDTH,

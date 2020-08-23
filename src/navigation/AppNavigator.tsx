@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import RootNavigator from './RootNavigator';
 import LoginNavigator from './LoginNavigator';
+import PaymentNavigator from './PaymentNavigator';
 
 const Stack = createStackNavigator();
 
@@ -12,11 +13,8 @@ const AppStack = () => {
     <NavigationContainer>
       <Stack.Navigator mode="modal">
         <Stack.Screen name="root" component={RootNavigator} options={{ headerShown: false }} />
-        <Stack.Screen
-          name="loginModal"
-          component={LoginNavigator}
-          options={{ headerShown: false }}
-        />
+        <Stack.Screen name="loginModal" component={LoginNavigator} options={{ headerShown: false }} />
+        <Stack.Screen name="paymentModal" component={PaymentNavigator} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

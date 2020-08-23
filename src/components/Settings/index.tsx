@@ -8,6 +8,7 @@ import ButtonWide from '../../components/common/ButtonWide';
 import { logout } from '../../lib/utils';
 import { Screens, TabNavigator } from '@routeTypes';
 import { logoutReset } from '../../lib/apollo';
+import Box from '@components/common/Box';
 
 const Settings = () => {
   const n = useNavigation();
@@ -32,15 +33,15 @@ const Settings = () => {
 
   return (
     <ScrollView>
-      <View>
+      <Box>
         <ButtonWide label="Profile details" />
         <ButtonWide label="Payments" />
         <ButtonWide label="Postage" />
         <ButtonWide label="Security" />
-      </View>
-      <View>
+      </Box>
+      <Box>
         <ButtonWide label="Log out" onPress={handleLogOut} />
-      </View>
+      </Box>
     </ScrollView>
   );
 };

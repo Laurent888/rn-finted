@@ -55,11 +55,12 @@ const resolvers = {
       if (!user) throw new AuthenticationError('Please login');
       const res = await User.findOne({ email: user.email });
       const id = res._id;
+
       return {
         id,
-        email: user.email,
-        username: user.username,
-        userPicture: user.userPicture,
+        email: res.email,
+        username: res.username,
+        userPicture: res.userPicture,
       };
     },
   },

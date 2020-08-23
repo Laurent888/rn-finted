@@ -18,8 +18,11 @@ const AddImageModal = ({ isVisible, onPress, onClose }: Props) => {
   const [imageUrl, setImageUrl] = useState('');
 
   useEffect(() => {
-    setImageUrl(mockPhoto[Math.ceil(Math.random() * mockPhoto.length)].name);
-  }, [isVisible]);
+    if (imageUrl !== '') {
+      onPress(imageUrl);
+      setImageUrl('');
+    }
+  }, [imageUrl]);
 
   return (
     <Modal
@@ -53,7 +56,9 @@ const AddImageModal = ({ isVisible, onPress, onClose }: Props) => {
         <View style={{ paddingVertical: 30 }}>
           <Button
             onPress={() => {
-              onPress(imageUrl);
+              const randomIndex = Math.floor(Math.random() * mockPhoto.length);
+              const randomPhoto = mockPhoto[randomIndex].name;
+              setImageUrl(randomPhoto);
             }}
           >
             Save

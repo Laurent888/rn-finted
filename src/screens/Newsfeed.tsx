@@ -1,15 +1,13 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, View, FlatList, AsyncStorage } from 'react-native';
-import { NavigationProp, RouteProp } from '@react-navigation/native';
-import { HomeStackParamsList, TabNavigator, Screens } from '@routeTypes';
+import React from 'react';
+import { View, FlatList } from 'react-native';
+import { NavigationProp } from '@react-navigation/native';
+import { HomeStackParamsList, Screens } from '@routeTypes';
 import { useQuery, useApolloClient, ApolloClient } from '@apollo/client';
 
 import ItemCard from '../components/common/ItemCard';
 import LoadingIndicator from '../components/common/LoadingIndicator';
 import Error from '../components/common/Error';
-import { GET_ME, IS_LOGGED_IN, GET_CURRENT_USER, GET_LISTINGS } from '../constant/queries';
-import { Button } from 'react-native-paper';
-import { logout } from '../lib/utils';
+import { IS_LOGGED_IN, GET_CURRENT_USER, GET_LISTINGS } from '../constant/queries';
 
 interface Props {
   navigation: NavigationProp<HomeStackParamsList, 'home'>;

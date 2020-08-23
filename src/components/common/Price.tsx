@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text } from 'react-native';
 import { MaterialIcons as Icon } from '@expo/vector-icons';
 import theme from '@theme';
+import Box from './Box';
 
 interface Props {
   price: string | number;
@@ -12,10 +13,10 @@ interface Props {
 
 const Price = ({ price, size = 16, color = '#444', padding = [0, 0] }: Props) => {
   return (
-    <View style={[s.container, { paddingLeft: padding[0], paddingRight: padding[1] }]}>
+    <Box flexDirection="row" alignItems="center" justifyContent="flex-start" px={[5, 9]}>
       <Text style={{ fontSize: size, color }}>{price}</Text>
       <Icon name="euro-symbol" size={size} color={color} style={{ paddingTop: 2 }} />
-    </View>
+    </Box>
   );
 };
 
@@ -27,11 +28,3 @@ Price.defaultProps = {
 };
 
 export default Price;
-
-const s = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-});

@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { StyleSheet, Dimensions, View, Text, TouchableOpacity } from 'react-native';
 import { Avatar, Card } from 'react-native-paper';
-import { AntDesign as Icon, MaterialIcons } from '@expo/vector-icons';
+import { SharedElement } from 'react-navigation-shared-element';
+import { AntDesign as Icon } from '@expo/vector-icons';
 import { Screens } from '@routeTypes';
-import { Listing } from '@constants/types';
+import { ListingProp } from '@constants/types';
 
 import theme from '../../style/theme';
 import Price from './Price';
@@ -27,7 +28,7 @@ const LeftContent = ({ imageUrl }: LeftContentProps) => (
 
 interface Props {
   navigation: any;
-  item: Listing;
+  item: ListingProp;
 }
 
 const ItemCard = ({ navigation, item }: Props) => {
@@ -43,7 +44,7 @@ const ItemCard = ({ navigation, item }: Props) => {
   const cardWidth = WIDTH / 2 - 1.5 * 10;
 
   const navigateToListing = () => {
-    navigation.navigate(Screens.LISTING, { id });
+    navigation.navigate(Screens.LISTING, { id, imageUrl: images[0] });
   };
 
   return (
@@ -53,11 +54,13 @@ const ItemCard = ({ navigation, item }: Props) => {
           <LeftContent imageUrl={userPicture} />
           <Text style={s.username}>{username}</Text>
         </Box>
-        <Card.Cover
-          source={{
-            uri: images[0],
-          }}
-        />
+        <SharedElement id={`card-cover-${id}`}>
+          <Card.Cover
+            source={{
+              uri: images[0],
+            }}
+          />
+        </SharedElement>
         <Card.Content style={{ paddingHorizontal: 4, paddingTop: 5 }}>
           <Box flexDirection="row" justifyContent="space-between">
             <Price price={price} />

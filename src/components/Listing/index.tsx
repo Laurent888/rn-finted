@@ -1,6 +1,7 @@
 import React, { useState, useLayoutEffect } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { useRoute, useNavigation, RouteProp, NavigationProp } from '@react-navigation/native';
+import { SharedElement } from 'react-navigation-shared-element';
 import theme from '@theme';
 import { useQuery, useMutation } from '@apollo/client';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
@@ -90,7 +91,7 @@ const Listing = () => {
     },
   });
 
-  if (loading) return <LoadingIndicator />;
+  if (loading) return <LoadingIndicator sharedImageId={`card-cover-${params.id}`} imageUrl={params.imageUrl} />;
   if (error) return <Error error={error} />;
 
   const { getListing } = data;
@@ -108,21 +109,28 @@ const Listing = () => {
     n.push(Screens.OTHER_PROFILE, { id: params.id, username, ownerId, userPicture });
   };
 
+  const navigateToPayment = () => {
+    n.navigate('paymentModal', { screen: Screens.PAYMENT, params: { id: params.id } });
+  };
+
   return (
     <Provider>
       <ScrollView>
         <View style={s.imgContainer}>
-          <Image
-            style={s.img}
-            source={{
-              uri: images[0],
-            }}
-          />
+          <SharedElement id={`card-cover-${params.id}`}>
+            <Image
+              style={s.img}
+              source={{
+                uri: images[0],
+              }}
+            />
+          </SharedElement>
         </View>
+
         <View>
           <UserInfoButton onPress={navigateToOtherProfile} username={username} userPicture={userPicture} />
 
-          <ListingHeader title={title} price={price} />
+          <ListingHeader title={title} price={price} handleBuy={navigateToPayment} />
 
           <ItemDescription description={description} />
 

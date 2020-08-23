@@ -20,6 +20,8 @@ export enum Screens {
   SETTINGS = 'settings',
   LOGIN_HOME = 'loginHome',
   OTHER_PROFILE = 'otherProfile',
+  PAYMENT = 'payment',
+  PAYMENT_OPTIONS = 'paymentOptions',
 }
 
 export type HomeStackParamsList = {

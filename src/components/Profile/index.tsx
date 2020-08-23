@@ -31,6 +31,7 @@ const Profile = () => {
   console.log('In Profile Screen, Is Logged in', lData, 'GetMe data', data);
 
   const { me } = data;
+  console.log('Me: ', me);
   client.writeQuery({
     query: GET_CURRENT_USER,
     data: {
@@ -52,8 +53,7 @@ const Profile = () => {
           <View style={s.avatar}>
             <Avatar.Image
               source={{
-                uri:
-                  'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Brad_Pitt_2019_by_Glenn_Francis.jpg/1200px-Brad_Pitt_2019_by_Glenn_Francis.jpg',
+                uri: me.userPicture,
               }}
               size={45}
             />

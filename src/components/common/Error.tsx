@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import Box from './Box';
 
 interface Props {
   error?: any;
@@ -8,9 +9,9 @@ interface Props {
 const Error = ({ error }: Props) => {
   console.log(error);
   return (
-    <View style={{ flex: 1, alignItems: 'center', paddingTop: 100 }}>
+    <Box py={[100, 0]} alignItems="center" style={{ flex: 1 }}>
       <Text>ERROR</Text>
-    </View>
+    </Box>
   );
 };
 
