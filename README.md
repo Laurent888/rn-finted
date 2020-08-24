@@ -2,6 +2,12 @@
 
 On Finted, give your clothes a second life by selling them !
 
+## Screenshots
+
+![Mobile App](assets/pixel3-1.png 'Mobile app')
+
+![Mobile App](assets/pixel3-2.png 'Mobile app')
+
 Work is still in progress.
 
 ## Technologies
@@ -26,12 +32,11 @@ Install the dependencies and devDependencies and start the server.
 ```
 cd server
 yarn install
-npm start
 ```
 
 For the client
 
 ```
 yarn install
-expo start
+yarn start
 ```
