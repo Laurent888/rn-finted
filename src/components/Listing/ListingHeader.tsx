@@ -10,9 +10,10 @@ interface Props {
   title: string;
   price: number;
   handleBuy: () => void;
+  currentUser: boolean;
 }
 
-const ListingHeader = ({ title, price, handleBuy }: Props) => {
+const ListingHeader = ({ title, price, handleBuy, currentUser }: Props) => {
   return (
     <View style={s.container}>
       <View>
@@ -21,17 +22,19 @@ const ListingHeader = ({ title, price, handleBuy }: Props) => {
         <Price price={price} />
       </View>
 
-      <View style={s.buttons}>
-        <Button mode="outlined" style={{ marginBottom: 20 }}>
-          Ask Seller
-        </Button>
+      {!currentUser && (
+        <View style={s.buttons}>
+          <Button mode="outlined" style={{ marginBottom: 20 }}>
+            Ask Seller
+          </Button>
 
-        <Button mode="contained" onPress={handleBuy}>
-          Buy Now
-        </Button>
-      </View>
+          <Button mode="contained" onPress={handleBuy}>
+            Buy Now
+          </Button>
+        </View>
+      )}
 
-      <Box flexDirection="row" alignItems="center" py={[0, 30]}>
+      <Box flexDirection="row" alignItems="center" py={[15, 30]}>
         <View style={s.iconContainer}>
           <Icon name="shield-check" size={40} color={theme.colors.primary} />
         </View>

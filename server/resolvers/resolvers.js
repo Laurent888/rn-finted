@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { AuthenticationError, ApolloError } = require('apollo-server');
+const axios = require('axios');
 
 const { createToken } = require('../utils/auth');
 const User = require('../schema/userModel');
@@ -62,6 +63,34 @@ const resolvers = {
         username: res.username,
         userPicture: res.userPicture,
       };
+    },
+    confirmOrder: async (_, { orderId }, ctx) => {
+      const url = `https://api.playground.klarna.com/checkout/v3/orders/${orderId}`;
+      try {
+        const res = await axios({
+          method: 'get',
+          headers: {
+            'content-type': 'application/json',
+          },
+          auth: {
+            username: 'PK27493_e3d7b46d123f',
+            password: '3G1F0lWCqULi7CTW',
+          },
+          url,
+        });
+
+        return {
+          order_id: res.data.order_id,
+          status: res.data.status,
+          purchase_country: res.data.purchase_country,
+          purchase_currency: res.data.purchase_currency,
+          order_amount: res.data.order_amount,
+          order_tax_amount: res.data.order_tax_amount,
+          html_snippet: res.data.html_snippet,
+        };
+      } catch (error) {
+        console.log('Confirm Order resolver error : ', error);
+      }
     },
   },
   Mutation: {
@@ -139,6 +168,69 @@ const resolvers = {
         return `Successfully deleted ${deletedCount} documents`;
       } catch (error) {
         throw new Error('there was an error');
+      }
+    },
+    checkout: async (_, { order }, ctx) => {
+      const TAX_RATE = 0.2;
+
+      const { title, totalPrice } = order;
+
+      const klarnaPrice = totalPrice * 100;
+      const klarnaTax = Math.floor(klarnaPrice - (klarnaPrice * 10000) / (10000 + TAX_RATE * 10000));
+
+      const orderMock = {
+        purchase_country: 'FR',
+        purchase_currency: 'EUR',
+        locale: 'en-GB',
+        order_amount: klarnaPrice,
+        order_tax_amount: klarnaTax,
+        order_lines: [
+          {
+            type: 'physical',
+            reference: '19-402-USA',
+            name: title,
+            quantity: 1,
+            quantity_unit: 'pcs',
+            unit_price: klarnaPrice,
+            tax_rate: TAX_RATE * 10000,
+            total_amount: klarnaPrice,
+            total_discount_amount: 0,
+            total_tax_amount: klarnaTax,
+          },
+        ],
+        merchant_urls: {
+          terms: 'https://www.example.com/terms.html',
+          checkout: 'https://www.example.com/checkout.html?order_id={checkout.order.id}',
+          confirmation: 'https://www.example.com/confirmation.html?order_id={checkout.order.id}',
+          push: 'https://www.example.com/api/push?order_id={checkout.order.id}',
+        },
+      };
+
+      try {
+        const res = await axios({
+          method: 'post',
+          headers: {
+            'content-type': 'application/json',
+          },
+          auth: {
+            username: 'PK27493_e3d7b46d123f',
+            password: '3G1F0lWCqULi7CTW',
+          },
+          url: 'https://api.playground.klarna.com/checkout/v3/orders',
+          data: orderMock,
+        });
+
+        return {
+          order_id: res.data.order_id,
+          status: res.data.status,
+          purchase_country: res.data.purchase_country,
+          purchase_currency: res.data.purchase_currency,
+          order_amount: res.data.order_amount,
+          order_tax_amount: res.data.order_tax_amount,
+          html_snippet: res.data.html_snippet,
+        };
+      } catch (error) {
+        console.log('Error :', error);
       }
     },
   },

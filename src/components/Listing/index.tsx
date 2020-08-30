@@ -130,7 +130,7 @@ const Listing = () => {
         <View>
           <UserInfoButton onPress={navigateToOtherProfile} username={username} userPicture={userPicture} />
 
-          <ListingHeader title={title} price={price} handleBuy={navigateToPayment} />
+          <ListingHeader title={title} price={price} handleBuy={navigateToPayment} currentUser={currentUserOwner} />
 
           <ItemDescription description={description} />
 

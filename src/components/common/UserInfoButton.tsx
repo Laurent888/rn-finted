@@ -11,9 +11,6 @@ interface Props {
   userPicture: string;
 }
 
-const profilePicMock =
-  'https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60';
-
 const UserInfoButton = ({ onPress, username, userPicture }: Props) => {
   return (
     <TouchableOpacity onPress={onPress}>

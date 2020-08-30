@@ -48,7 +48,9 @@ const Profile = () => {
       <View style={s.container}>
         <TouchableOpacity
           style={s.profileBtn}
-          onPress={() => n.navigate(Screens.OTHER_PROFILE, { ownerId: me.id, username: me.username })}
+          onPress={() =>
+            n.navigate(Screens.OTHER_PROFILE, { ownerId: me.id, username: me.username, userPicture: me.userPicture })
+          }
         >
           <View style={s.avatar}>
             <Avatar.Image

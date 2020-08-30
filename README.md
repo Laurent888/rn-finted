@@ -18,10 +18,11 @@ Work is still in progress.
 
 Finted is a fullstack application.
 
-## Features!
+## Features
 
-- Authentication
-- Create a user and post new listing
+- Authentication: Sign in & Sign up
+- Create user, post new listing
+- Visit other users profile and listings
 
 ## Installation
 

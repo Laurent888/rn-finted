@@ -48,7 +48,7 @@ const ItemCard = ({ navigation, item }: Props) => {
   };
 
   return (
-    <TouchableOpacity onPress={navigateToListing} style={{ width: cardWidth }}>
+    <TouchableOpacity onPress={navigateToListing} style={{ width: cardWidth }} activeOpacity={0.8}>
       <Card elevation={0} style={[s.cardContainer]}>
         <Box flexDirection="row" justifyContent="flex-start" px={[5, 5]} py={[7, 7]}>
           <LeftContent imageUrl={userPicture} />

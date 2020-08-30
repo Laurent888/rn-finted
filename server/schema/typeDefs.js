@@ -22,6 +22,16 @@ const typeDefs = gql`
     updatedAt: String
   }
 
+  type KlarnaResponse {
+    order_id: String
+    status: String
+    purchase_country: String
+    purchase_currency: String
+    order_amount: Int
+    order_tax_amount: Int
+    html_snippet: String
+  }
+
   input CreateListingInput {
     title: String!
     price: Int!
@@ -32,6 +42,11 @@ const typeDefs = gql`
     category: [String]
   }
 
+  input ItemOrder {
+    title: String!
+    totalPrice: Float!
+  }
+
   type Query {
     getUsers: [User]
     getUser(id: ID!): User
@@ -39,6 +54,7 @@ const typeDefs = gql`
     getListings(ownerId: String, keyword: String): [Listing]
     getListing(id: ID!): Listing
     refreshToken(token: String): String
+    confirmOrder(orderId: String): KlarnaResponse
   }
 
   type Mutation {
@@ -48,6 +64,7 @@ const typeDefs = gql`
     createListing(newListing: CreateListingInput): Listing
     deleteListing(id: ID): String
     deleteAllListings: String
+    checkout(order: ItemOrder): KlarnaResponse
   }
 `;
 

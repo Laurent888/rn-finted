@@ -22,6 +22,8 @@ export enum Screens {
   OTHER_PROFILE = 'otherProfile',
   PAYMENT = 'payment',
   PAYMENT_OPTIONS = 'paymentOptions',
+  PAYMENT_WEBVIEW = 'paymentWebview',
+  PAYMENT_WEBVIEWCONFIRM = 'paymentWebviewConfirm',
 }
 
 export type HomeStackParamsList = {

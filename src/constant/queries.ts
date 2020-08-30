@@ -83,6 +83,20 @@ export const GET_LISTING = gql`
   }
 `;
 
+export const CONFIRM_ORDER = gql`
+  query ConfirmOrder($orderId: String) {
+    confirmOrder(orderId: $orderId) {
+      order_id
+      status
+      purchase_country
+      purchase_currency
+      order_amount
+      order_tax_amount
+      html_snippet
+    }
+  }
+`;
+
 // MUTATIONS
 
 export const LOGIN = gql`
@@ -122,5 +136,19 @@ export const CREATE_LISTING = gql`
 export const DELETE_LISTING = gql`
   mutation DeleteListing($id: ID) {
     deleteListing(id: $id)
+  }
+`;
+
+export const CHECKOUT = gql`
+  mutation Checkout($order: ItemOrder) {
+    checkout(order: $order) {
+      order_id
+      status
+      purchase_country
+      purchase_currency
+      order_amount
+      order_tax_amount
+      html_snippet
+    }
   }
 `;
