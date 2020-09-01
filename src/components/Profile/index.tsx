@@ -65,28 +65,13 @@ const Profile = () => {
             <Text style={s.viewProfile}>View my profile</Text>
           </View>
         </TouchableOpacity>
-
-        <ButtonWide label="Your guide to Finted" onPress={() => console.log('')} />
       </View>
 
       <Box my={[0, 10]} style={s.container}>
         <ButtonWide label="Favorite items" onPress={() => console.log('')} />
-        <ButtonWide label="Personalisation" onPress={() => console.log('')} />
-        <ButtonWide label="Balance" onPress={() => console.log('')} />
         <ButtonWide label="My orders" onPress={() => console.log('')} />
-        <ButtonWide label="Bundle discounts" onPress={() => console.log('')} />
       </Box>
 
-      <Box my={[0, 10]} style={s.container}>
-        <ButtonWide label="Forum" onPress={() => console.log('')} />
-      </Box>
-
-      <Box my={[0, 10]} style={s.container}>
-        <ButtonWide label="Invite friends" onPress={() => console.log('')} />
-      </Box>
-      <Box my={[0, 10]} style={s.container}>
-        <ButtonWide label="Holiday mode" onPress={() => console.log('')} />
-      </Box>
       <Box my={[0, 10]} style={s.container}>
         <ButtonWide label="Settings" onPress={() => n.navigate(Screens.SETTINGS)} />
         <ButtonWide label="About Finted" onPress={() => console.log('')} />

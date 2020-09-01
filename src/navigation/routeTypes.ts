@@ -18,6 +18,7 @@ export enum Screens {
   INBOX = 'inbox',
   PROFILE = 'profile',
   SETTINGS = 'settings',
+  EDIT_PROFILE = 'editProfile',
   LOGIN_HOME = 'loginHome',
   OTHER_PROFILE = 'otherProfile',
   PAYMENT = 'payment',

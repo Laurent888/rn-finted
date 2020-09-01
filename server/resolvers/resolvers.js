@@ -73,8 +73,8 @@ const resolvers = {
             'content-type': 'application/json',
           },
           auth: {
-            username: 'PK27493_e3d7b46d123f',
-            password: '3G1F0lWCqULi7CTW',
+            username: process.env.KLARNA_USERNAME,
+            password: process.env.KLARNA_PASSWORD,
           },
           url,
         });

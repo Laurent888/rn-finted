@@ -34,7 +34,7 @@ const Settings = () => {
   return (
     <ScrollView>
       <Box>
-        <ButtonWide label="Profile details" />
+        <ButtonWide label="Profile details" onPress={() => n.navigate(Screens.EDIT_PROFILE)} />
         <ButtonWide label="Payments" />
         <ButtonWide label="Postage" />
         <ButtonWide label="Security" />

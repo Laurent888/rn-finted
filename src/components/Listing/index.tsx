@@ -114,7 +114,7 @@ const Listing = () => {
   };
 
   return (
-    <Provider>
+    <>
       <ScrollView>
         <View style={s.imgContainer}>
           <SharedElement id={`card-cover-${params.id}`}>
@@ -140,11 +140,11 @@ const Listing = () => {
         </View>
       </ScrollView>
 
-      <Menu visible={visible} onDismiss={closeMenu} anchor={{ x: 220, y: 0 }}>
+      <Menu visible={visible} onDismiss={closeMenu} anchor={{ x: 220, y: 85 }}>
         <Menu.Item onPress={() => {}} title="Edit" />
         <Menu.Item onPress={handleDelete} title="Delete" titleStyle={{ color: theme.colors.error }} />
       </Menu>
-    </Provider>
+    </>
   );
 };
 

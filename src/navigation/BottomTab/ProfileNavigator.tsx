@@ -12,6 +12,7 @@ import { Screens } from '@routeTypes';
 
 import { IS_LOGGED_IN } from '../../constant/queries';
 import LoginNavigator from '../LoginNavigator';
+import EditProfile from '@components/EditProfile';
 
 const Stack = createStackNavigator();
 
@@ -32,6 +33,7 @@ const ProfileNavigator = () => {
       <Stack.Screen name={Screens.PROFILE} component={ProfileScreen} />
       <Stack.Screen name={Screens.SETTINGS} component={SettingsScreen} />
       <Stack.Screen name={Screens.OTHER_PROFILE} component={OtherProfile} />
+      <Stack.Screen name={Screens.EDIT_PROFILE} options={{ headerTitle: 'Edit Profile' }} component={EditProfile} />
     </Stack.Navigator>
   );
 };
