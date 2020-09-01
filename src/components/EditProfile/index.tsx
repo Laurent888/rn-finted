@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableWithoutFeedback, Dimensions, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import { Text, ScrollView, Dimensions } from 'react-native';
 import { Formik } from 'formik';
-import { Calendar } from 'react-native-calendars';
 import * as Yup from 'yup';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
-import Modal from 'react-native-modal';
-import { Avatar, Menu, Button } from 'react-native-paper';
+import { Avatar, Menu } from 'react-native-paper';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 
-import s from './styles';
 import Box from '@components/common/Box';
 import InputField from '@components/common/InputField';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ButtonWide from '@components/common/ButtonWide';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
+import BirthdayModal from './BirthdayModal';
+
+import s from './styles';
 
 const WIDTH = Dimensions.get('screen').width;
 
@@ -58,11 +58,6 @@ interface CheckmarkProps {
   onPress: () => void;
 }
 
-interface CalendarModalProps {
-  isVisible: boolean;
-  onClose: (date: string) => void;
-}
-
 const ValidationCheckmark = ({ onPress }: CheckmarkProps) => {
   return (
     <TouchableOpacity onPress={onPress}>
@@ -85,69 +80,6 @@ const MenuModal = React.memo(({ isVisible, onDismiss, options, onSelect }: MenuM
         />
       ))}
     </Menu>
-  );
-});
-
-const CalendarModal = React.memo(({ isVisible, onClose }: CalendarModalProps) => {
-  const [year, setYear] = useState<string | null>(null);
-  const [month, setMonth] = useState<string | null>(null);
-  const [day, setDay] = useState<string | null>(null);
-
-  const handleClose = () => {
-    if (day && month && year) {
-      onClose(`${day}-${month}-${year}`);
-    } else {
-      onClose('');
-    }
-  };
-
-  return (
-    <Modal isVisible={isVisible} onBackdropPress={() => onClose('')}>
-      <View
-        style={{
-          paddingVertical: 15,
-          paddingHorizontal: 15,
-          backgroundColor: '#4cb6de',
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}
-      >
-        <TextInput
-          value={day || ''}
-          placeholder="DD"
-          onChangeText={(t) => setDay(t)}
-          keyboardType="number-pad"
-          style={[s.birthdayFont, { width: 80 }]}
-          placeholderTextColor="#fff"
-          maxLength={2}
-        />
-        <Text style={s.birthdayFont}>-</Text>
-        <TextInput
-          value={month || ''}
-          placeholder="MM"
-          onChangeText={(t) => setMonth(t)}
-          keyboardType="number-pad"
-          style={[s.birthdayFont, { width: 80 }]}
-          placeholderTextColor="#fff"
-          maxLength={2}
-        />
-        <Text style={s.birthdayFont}>-</Text>
-        <TextInput
-          value={year || ''}
-          placeholder="YYYY"
-          onChangeText={(t) => setYear(t)}
-          keyboardType="number-pad"
-          style={[s.birthdayFont, { width: 80 }]}
-          placeholderTextColor="#fff"
-          maxLength={4}
-        />
-      </View>
-      <View>
-        <Button mode="contained" color="#fff" onPress={handleClose}>
-          Validate
-        </Button>
-      </View>
-    </Modal>
   );
 });
 
@@ -264,7 +196,7 @@ const EditProfile = () => {
                 onSelect={(name: string) => setFieldValue('gender', name)}
               />
 
-              <CalendarModal
+              <BirthdayModal
                 isVisible={calendarVisible}
                 onClose={(date: string) => {
                   console.log('Date :', date);

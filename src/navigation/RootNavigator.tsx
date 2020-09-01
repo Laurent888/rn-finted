@@ -33,6 +33,18 @@ const RootNavigator = () => {
     },
   });
 
+  const getRouteNameVisible = (route) => {
+    const routeIndex = route.state ? route.state.index : null;
+    if (!routeIndex) return true;
+    const routeName = route.state.routes[routeIndex].name;
+
+    if (routeName === Screens.EDIT_PROFILE) {
+      return false;
+    }
+
+    return true;
+  };
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -73,7 +85,10 @@ const RootNavigator = () => {
       <Tab.Screen
         name={TabNavigator.PROFILE_TAB}
         component={ProfileNavigator}
-        options={{ tabBarLabel: 'Profile' }}
+        options={({ route }) => {
+          console.log('***** Route ****** : ', route);
+          return { tabBarLabel: 'Profile', tabBarVisible: getRouteNameVisible(route) };
+        }}
         listeners={({ navigation }) => listenersTab(navigation, TabNavigator.PROFILE_TAB, Screens.PROFILE)}
       />
     </Tab.Navigator>
