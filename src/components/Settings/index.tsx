@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, ScrollView } from 'react-native';
-import { useNavigation, StackActions, CommonActions } from '@react-navigation/native';
+import { ScrollView } from 'react-native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 import { useApolloClient, ApolloClient } from '@apollo/client';
-import { IS_LOGGED_IN, GET_CURRENT_USER } from '@constants/queries';
+import { IS_LOGGED_IN } from '@constants/queries';
 
 import Box from '@components/common/Box';
 import { Screens, TabNavigator } from '@routeTypes';

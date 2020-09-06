@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useQuery } from '@apollo/client';
-import { GET_USERS, GET_LISTINGS, GET_CURRENT_USER } from '@constants/queries';
+import { GET_LISTINGS, GET_CURRENT_USER } from '@constants/queries';
 import UserInfoButton from '@components/common/UserInfoButton';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import theme from '@theme';

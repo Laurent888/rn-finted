@@ -1,7 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
-import ButtonWide from '../../components/common/ButtonWide';
 import Box from '@components/common/Box';
+import ButtonWide from '../common/ButtonWide';
 
 interface Props {
   price: string;

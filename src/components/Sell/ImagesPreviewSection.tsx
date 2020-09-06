@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import AddImagePreview from '../../components/common/AddImagePreview';
+import React from 'react';
+import { View } from 'react-native';
+import AddImagePreview from '../common/AddImagePreview';
 
 interface Props {
   maxImages: number;
@@ -21,5 +21,3 @@ const ImagesPreviewSection = ({ maxImages, images, onPress }: Props) => {
 };
 
 export default ImagesPreviewSection;
-
-const styles = StyleSheet.create({});

@@ -4,9 +4,9 @@ import { Text } from 'react-native';
 
 import Box from '@components/common/Box';
 import { Button } from 'react-native-paper';
+import theme from '@theme';
 
 import s from './styles';
-import theme from '@theme';
 
 interface PaymentConfirmationBoxProps {
   n: NavigationProp<any, any>;

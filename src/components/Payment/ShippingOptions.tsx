@@ -1,10 +1,10 @@
 import React from 'react';
-import { Text, Image } from 'react-native';
+import { Text, Image, TouchableOpacity } from 'react-native';
 import { RadioButton } from 'react-native-paper';
-
-import s from './styles';
 import Box from '@components/common/Box';
 import theme from '@theme';
+
+import s from './styles';
 
 export interface OptionProps {
   id: string;
@@ -43,31 +43,36 @@ const ShippingOptions = ({ value, setValue }: ShippingOptionsProps) => {
     <Box stretch py={[15, 10]}>
       <Text style={[s.title, { paddingBottom: 10 }]}>Shipping Options</Text>
       {ShippingOptionsData.map((option) => (
-        <Box
+        <TouchableOpacity
+          activeOpacity={1}
           key={option.id}
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="space-between"
-          py={[15, 15]}
-          stretch
-          style={s.shippingOptionRow}
+          onPress={() => setValue({ id: option.id, price: option.price })}
         >
-          <Box flexDirection="row" alignItems="center">
-            <Image source={{ uri: option.logo }} resizeMode="contain" style={s.shippingLogo} />
+          <Box
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="space-between"
+            py={[15, 15]}
+            stretch
+            style={s.shippingOptionRow}
+          >
+            <Box flexDirection="row" alignItems="center">
+              <Image source={{ uri: option.logo }} resizeMode="contain" style={s.shippingLogo} />
 
-            <Box py={[0, 4]}>
-              <Text>{option.name}</Text>
-              <Text style={s.shippingPrice}>{`${option.price}€`}</Text>
+              <Box py={[0, 4]}>
+                <Text>{option.name}</Text>
+                <Text style={s.shippingPrice}>{`${option.price}€`}</Text>
+              </Box>
             </Box>
-          </Box>
 
-          <RadioButton
-            value={option.id}
-            onPress={() => setValue({ id: option.id, price: option.price })}
-            status={value.id === option.id ? 'checked' : 'unchecked'}
-            color={theme.colors.primary}
-          />
-        </Box>
+            <RadioButton
+              value={option.id}
+              onPress={() => setValue({ id: option.id, price: option.price })}
+              status={value.id === option.id ? 'checked' : 'unchecked'}
+              color={theme.colors.primary}
+            />
+          </Box>
+        </TouchableOpacity>
       ))}
     </Box>
   );

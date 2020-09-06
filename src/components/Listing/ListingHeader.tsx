@@ -2,9 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import theme from '@theme';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
-import Button from '../common/Button';
 import Price from '@components/common/Price';
 import Box from '@components/common/Box';
+
+import Button from '../common/Button';
 
 interface Props {
   title: string;

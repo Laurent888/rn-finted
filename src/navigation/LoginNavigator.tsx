@@ -11,11 +11,7 @@ const Stack = createStackNavigator();
 const LoginNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name={Screens.LOGIN_HOME}
-        component={LoginHomeScreen}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name={Screens.LOGIN_HOME} component={LoginHomeScreen} options={{ headerShown: false }} />
       <Stack.Screen name={Screens.LOGIN} component={LoginScreen} />
       <Stack.Screen name={Screens.REGISTER} component={RegisterScreen} />
     </Stack.Navigator>

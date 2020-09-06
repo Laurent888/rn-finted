@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 
 type AlignmentType = 'flex-start' | 'flex-end' | 'center' | 'stretch';
 type JustifyType =

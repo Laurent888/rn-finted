@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Screens } from '@routeTypes';
-import { useQuery, gql } from '@apollo/client';
-import { View, Text } from 'react-native';
 
 import LoginScreen from '@screens/LoginScreen';
 import SellScreen from '@screens/SellScreen';

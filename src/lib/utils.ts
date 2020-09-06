@@ -19,11 +19,13 @@ export const formatDate = (createdAt) => {
 
   if (testCurrentDate === testCreatedDate) {
     return `Today ${dayjs(createdAt).format('HH:mm')}`;
-  } else if (testCreatedDate === testYesterdayDate) {
-    return `Yesterday ${dayjs(createdAt).format('HH:mm')}`;
-  } else {
-    return dayjs(createdAt).format('DD/MM HH:mm');
   }
+
+  if (testCreatedDate === testYesterdayDate) {
+    return `Yesterday ${dayjs(createdAt).format('HH:mm')}`;
+  }
+
+  return dayjs(createdAt).format('DD/MM HH:mm');
 };
 
 export const defaultProfilePicUrl =

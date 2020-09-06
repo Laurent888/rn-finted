@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import Modal from 'react-native-modal';
 import { Entypo } from '@expo/vector-icons';
 import theme from '@theme';
-
-import Button from '../../components/common/Button';
 import { mockPhoto } from '@constants/mockData';
+
+import Button from '../common/Button';
 
 interface Props {
   isVisible: boolean;

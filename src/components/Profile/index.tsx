@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
-import { Avatar, Button } from 'react-native-paper';
+import { Avatar } from 'react-native-paper';
 import { useQuery, useApolloClient } from '@apollo/client';
 import theme from '@theme';
 import { GET_ME, IS_LOGGED_IN, GET_CURRENT_USER } from '@constants/queries';

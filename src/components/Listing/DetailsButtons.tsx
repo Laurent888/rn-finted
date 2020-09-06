@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import ButtonWide from '../../components/common/ButtonWide';
 import { Screens } from '@routeTypes';
+import ButtonWide from '../common/ButtonWide';
 import { formatDate } from '../../lib/utils';
 
 interface Props {
@@ -16,11 +16,7 @@ const DetailsButtons = ({ category, navigation, createdAt }: Props) => {
 
   return (
     <>
-      <ButtonWide
-        label="Category"
-        desc={category[1]}
-        onPress={() => navigation.push(Screens.NEWSFEED)}
-      />
+      <ButtonWide label="Category" desc={category[1]} onPress={() => navigation.push(Screens.NEWSFEED)} />
       <ButtonWide label="Size" desc="L / 40 /12" />
       <ButtonWide label="Colour" desc="Purple, Red" />
       <ButtonWide label="Views" desc="21" />

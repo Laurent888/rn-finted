@@ -5,7 +5,7 @@ import Modal from 'react-native-modal';
 import theme from '@theme';
 import { categories } from '../../constant/categories';
 
-import ButtonWide from '../../components/common/ButtonWide';
+import ButtonWide from '../common/ButtonWide';
 
 interface Props {
   isVisible: boolean;
@@ -13,7 +13,7 @@ interface Props {
   onConfirm: (cateogry) => void;
 }
 
-const width = Dimensions.get('screen').width;
+const { width } = Dimensions.get('screen');
 
 const ModalCategory = ({ isVisible, cancel, onConfirm }: Props) => {
   const [step, setStep] = useState(0);

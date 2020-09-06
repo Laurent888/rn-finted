@@ -1,15 +1,9 @@
-import React, { ChangeEvent } from "react";
-import {
-  Text,
-  View,
-  NativeSyntheticEvent,
-  TextInputFocusEventData,
-  TextInputProps,
-} from "react-native";
+import React, { ChangeEvent } from 'react';
+import { Text, View, NativeSyntheticEvent, TextInputFocusEventData, TextInputProps } from 'react-native';
 
-import { TextInput } from "react-native-paper";
-import { useField } from "formik";
-import theme from "@theme";
+import { TextInput } from 'react-native-paper';
+import { useField } from 'formik';
+import theme from '@theme';
 
 interface Props extends TextInputProps {
   name: string;
@@ -21,15 +15,7 @@ interface Props extends TextInputProps {
   containerStyle?: any;
 }
 
-const InputField = ({
-  label,
-  value,
-  onChangeText,
-  onBlur,
-  style,
-  containerStyle,
-  ...props
-}: Props) => {
+const InputField = ({ label, value, onChangeText, onBlur, style, containerStyle, ...props }: Props) => {
   const [field, meta] = useField(props);
 
   return (
@@ -50,9 +36,7 @@ const InputField = ({
       />
       {meta.touched && meta.error ? (
         <View>
-          <Text style={{ marginLeft: 5, color: theme.colors.error }}>
-            {meta.error}
-          </Text>
+          <Text style={{ marginLeft: 5, color: theme.colors.error }}>{meta.error}</Text>
         </View>
       ) : null}
     </View>

@@ -5,15 +5,17 @@ import { useQuery, useMutation } from '@apollo/client';
 import { GET_LISTING, CHECKOUT } from '@constants/queries';
 
 import { MaterialCommunityIcons as MIcon } from '@expo/vector-icons';
-import s from './styles';
 
-import PaymentConfirmationBox from './PaymentConfirmationBox';
-import ShippingOptions, { OptionProps } from './ShippingOptions';
 import Box from '@components/common/Box';
 import LoadingIndicator from '@components/common/LoadingIndicator';
 import Error from '@components/common/Error';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Screens } from '@routeTypes';
+import theme from '@theme';
+
+import PaymentConfirmationBox from './PaymentConfirmationBox';
+import ShippingOptions, { OptionProps } from './ShippingOptions';
+import s from './styles';
 
 interface KlarnaResponse {
   order_id: string;
@@ -82,7 +84,7 @@ const Payment = () => {
 
   return (
     <>
-      <ScrollView style={{ width: '100%', height: '100%' }}>
+      <ScrollView style={{ width: theme.dimensions.width, height: '100%' }}>
         <View style={s.container}>
           <Box py={[40, 40]} alignItems="center">
             <Box style={{ height: 200, width: 150 }}>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, Image } from 'react-native';
+import { Text, Image, TouchableOpacity } from 'react-native';
 import Box from '@components/common/Box';
 import theme from '@theme';
 import { RadioButton } from 'react-native-paper';
@@ -17,36 +17,42 @@ const paymentServicesData = [
   },
 ];
 
-const PaymentsServices = ({ value, setValue }) => {
+interface PaymentProps {
+  value: string;
+  setValue: (id: string) => void;
+}
+
+const PaymentsServices = ({ value, setValue }: PaymentProps) => {
   return (
     <>
       {paymentServicesData.map((option) => (
-        <Box
-          key={option.id}
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="space-between"
-          px={[15, 15]}
-          py={[15, 15]}
-          style={{ borderBottomColor: theme.colors.lightGrey, borderBottomWidth: 0.5 }}
-          stretch
-        >
-          <Box flexDirection="row" alignItems="center">
-            <Image
-              source={{ uri: option.logo }}
-              resizeMode="contain"
-              style={{ width: 50, height: 35, marginRight: 5, borderRadius: 5 }}
-            />
-            <Text>{option.name}</Text>
-          </Box>
+        <TouchableOpacity key={option.id} activeOpacity={1} onPress={() => setValue(option.id)}>
+          <Box
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="space-between"
+            px={[15, 15]}
+            py={[15, 15]}
+            style={{ borderBottomColor: theme.colors.lightGrey, borderBottomWidth: 0.5 }}
+            stretch
+          >
+            <Box flexDirection="row" alignItems="center">
+              <Image
+                source={{ uri: option.logo }}
+                resizeMode="contain"
+                style={{ width: 50, height: 35, marginRight: 5, borderRadius: 5 }}
+              />
+              <Text>{option.name}</Text>
+            </Box>
 
-          <RadioButton
-            value={option.id}
-            onPress={() => setValue(option.id)}
-            status={value === option.id ? 'checked' : 'unchecked'}
-            color={theme.colors.primary}
-          />
-        </Box>
+            <RadioButton
+              value={option.id}
+              onPress={() => setValue(option.id)}
+              status={value === option.id ? 'checked' : 'unchecked'}
+              color={theme.colors.primary}
+            />
+          </Box>
+        </TouchableOpacity>
       ))}
     </>
   );
@@ -63,5 +69,3 @@ const PaymentOptions = () => {
 };
 
 export default PaymentOptions;
-
-const styles = StyleSheet.create({});

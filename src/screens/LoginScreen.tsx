@@ -5,10 +5,10 @@ import * as Yup from 'yup';
 import { useMutation, useApolloClient, ApolloClient } from '@apollo/client';
 import theme from '@theme';
 import { LOGIN, IS_LOGGED_IN } from '@constants/queries';
+import { TabNavigator, Screens } from '@routeTypes';
 
 import Button from '../components/common/Button';
 import InputField from '../components/common/InputField';
-import { TabNavigator, Screens } from '@routeTypes';
 
 const LoginScreen = ({ navigation }) => {
   useEffect(() => {
@@ -50,9 +50,7 @@ const LoginScreen = ({ navigation }) => {
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email address').required('This field is required'),
-    password: Yup.string()
-      .min(4, 'Must be 4 characters or more')
-      .required('This field is required'),
+    password: Yup.string().min(4, 'Must be 4 characters or more').required('This field is required'),
   });
 
   return (

@@ -1,7 +1,7 @@
-import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
-import { Ionicons as Icon } from "@expo/vector-icons";
-import theme from "@theme";
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import { Ionicons as Icon } from '@expo/vector-icons';
+import theme from '@theme';
 
 const s = StyleSheet.create({
   container: {
@@ -10,21 +10,21 @@ const s = StyleSheet.create({
     borderRadius: 10,
     borderColor: theme.colors.primary,
     borderWidth: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     margin: 5,
   },
   imageContainer: {
     height: 100,
     width: 100,
     borderRadius: 10,
-    overflow: "hidden",
+    overflow: 'hidden',
     margin: 5,
   },
   image: {
-    width: "100%",
-    height: "100%",
-    resizeMode: "cover",
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
 });
 

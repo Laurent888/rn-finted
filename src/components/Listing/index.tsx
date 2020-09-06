@@ -1,22 +1,22 @@
 import React, { useState, useLayoutEffect } from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, View, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { useRoute, useNavigation, RouteProp, NavigationProp } from '@react-navigation/native';
 import { SharedElement } from 'react-navigation-shared-element';
 import theme from '@theme';
 import { useQuery, useMutation } from '@apollo/client';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
-import { Menu, Provider } from 'react-native-paper';
+import { Menu } from 'react-native-paper';
 import { Screens, HomeStackParamsList } from '@routeTypes';
 import UserInfoButton from '@components/common/UserInfoButton';
 import { GET_LISTING, GET_CURRENT_USER, DELETE_LISTING, GET_LISTINGS } from '@constants/queries';
+import { ListingProp } from '@constants/types';
 
 import ListingHeader from './ListingHeader';
 import ItemDescription from './ItemDescription';
 import DetailsButtons from './DetailsButtons';
 import Postage from './Postage';
-import LoadingIndicator from '../../components/common/LoadingIndicator';
-import Error from '../../components/common/Error';
-import { ListingProp } from '@constants/types';
+import LoadingIndicator from '../common/LoadingIndicator';
+import Error from '../common/Error';
 
 type ListingRouteProp = RouteProp<HomeStackParamsList, 'listing'>;
 type ListingNavigationProp = NavigationProp<HomeStackParamsList, 'listing'>;

@@ -8,13 +8,13 @@ import { CREATE_LISTING, GET_CURRENT_USER } from '@constants/queries';
 import { useNavigation } from '@react-navigation/native';
 
 import { styles as s } from './styles';
-import Button from '../../components/common/Button';
-import ButtonWide from '../../components/common/ButtonWide';
+import Button from '../common/Button';
+import ButtonWide from '../common/ButtonWide';
 import ModalPrice from './ModalPrice';
 import ModalCategory from './ModalCategory';
 import AddImageModal from './AddImageModal';
 import ImagesPreviewSection from './ImagesPreviewSection';
-import LoadingIndicator from '../../components/common/LoadingIndicator';
+import LoadingIndicator from '../common/LoadingIndicator';
 
 const maxImage = 3;
 
@@ -89,20 +89,12 @@ const Sell = () => {
         };
         return (
           <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
-            <AddImageModal
-              isVisible={modalImage}
-              onPress={addImage}
-              onClose={() => setModalImage(false)}
-            />
+            <AddImageModal isVisible={modalImage} onPress={addImage} onClose={() => setModalImage(false)} />
 
             <View style={s.container}>
               <View style={s.inputContainer}>
                 <Text style={s.label}>Images</Text>
-                <ImagesPreviewSection
-                  maxImages={maxImage}
-                  images={images}
-                  onPress={() => setModalImage(true)}
-                />
+                <ImagesPreviewSection maxImages={maxImage} images={images} onPress={() => setModalImage(true)} />
                 <Button onPress={() => setImages([])}>Delete</Button>
               </View>
               <View style={s.inputContainer}>
