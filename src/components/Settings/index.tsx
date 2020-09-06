@@ -4,11 +4,11 @@ import { useNavigation, StackActions, CommonActions } from '@react-navigation/na
 import { useApolloClient, ApolloClient } from '@apollo/client';
 import { IS_LOGGED_IN, GET_CURRENT_USER } from '@constants/queries';
 
-import ButtonWide from '../../components/common/ButtonWide';
-import { logout } from '../../lib/utils';
-import { Screens, TabNavigator } from '@routeTypes';
-import { logoutReset } from '../../lib/apollo';
 import Box from '@components/common/Box';
+import { Screens, TabNavigator } from '@routeTypes';
+
+import ButtonWide from '../common/ButtonWide';
+import { logout } from '../../lib/utils';
 
 const Settings = () => {
   const n = useNavigation();

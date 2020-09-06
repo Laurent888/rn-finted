@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { AuthenticationError, ApolloError } = require('apollo-server');
 const axios = require('axios');
+const { getRandomPicture } = require('../utils/getProfilePicture');
 
 const { createToken } = require('../utils/auth');
 const User = require('../schema/userModel');
@@ -121,10 +122,13 @@ const resolvers = {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        const userPicture = getRandomPicture();
+
         const userData = {
           email,
           username,
           password: hashedPassword,
+          userPicture,
         };
 
         await User.create(userData);

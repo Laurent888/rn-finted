@@ -20,6 +20,7 @@
     "concurrently": "^5.3.0",
     "dayjs": "^1.8.33",
     "expo": "~38.0.8",
+    "expo-asset": "^8.1.7",
     "expo-status-bar": "^1.0.2",
     "formik": "^2.1.5",
     "graphql": "^15.3.0",
@@ -61,6 +62,7 @@
     "eslint-plugin-react": "^7.20.5",
     "eslint-plugin-react-hooks": "^4.0.8",
     "eslint-plugin-react-native": "^3.8.1",
+    "prettier": "^2.1.1",
     "react-navigation": "4.3.7",
     "react-navigation-stack": "2.3.11",
     "typescript": "~3.9.5"

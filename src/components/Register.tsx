@@ -1,34 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, AsyncStorage } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import theme from "@theme";
-import { KeyboardAwareScrollView } from "@codler/react-native-keyboard-aware-scroll-view";
-import { useMutation, ApolloError, useQuery } from "@apollo/client";
-import { CREATE_USER, IS_LOGGED_IN } from "@constants/queries";
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import theme from '@theme';
+import { ActivityIndicator } from 'react-native-paper';
+import { Screens } from '@routeTypes';
+import { KeyboardAwareScrollView } from '@codler/react-native-keyboard-aware-scroll-view';
+import { useMutation } from '@apollo/client';
+import { CREATE_USER } from '@constants/queries';
 
-import InputField from "./common/InputField";
-import Button from "./common/Button";
-import { ActivityIndicator } from "react-native-paper";
-import { TabNavigator, Screens } from "@routeTypes";
+import InputField from './common/InputField';
+import Button from './common/Button';
 
 const initialValues = {
-  username: "",
-  email: "",
-  password: "",
+  username: '',
+  email: '',
+  password: '',
 };
 
 const validationSchema = Yup.object().shape({
-  username: Yup.string()
-    .min(4, "Minimum 4 characters")
-    .required("This field is required"),
-  email: Yup.string()
-    .email("Invalid email address")
-    .required("This field is required"),
-  password: Yup.string()
-    .min(4, "Must be 4 characters or more")
-    .required("This field is required"),
+  username: Yup.string().min(4, 'Minimum 4 characters').required('This field is required'),
+  email: Yup.string().email('Invalid email address').required('This field is required'),
+  password: Yup.string().min(4, 'Must be 4 characters or more').required('This field is required'),
 });
 
 const Register = () => {
@@ -43,7 +37,7 @@ const Register = () => {
       }, 4000);
     },
     onCompleted: async ({ createUser }) => {
-      await AsyncStorage.setItem("TOKEN", createUser);
+      await AsyncStorage.setItem('TOKEN', createUser);
 
       n.navigate(Screens.LOGIN);
     },
@@ -51,14 +45,12 @@ const Register = () => {
 
   useEffect(() => {
     n.setOptions({
-      title: "Register",
+      title: 'Register',
     });
   }, []);
 
   return (
-    <KeyboardAwareScrollView
-      style={{ flex: 1, backgroundColor: theme.colors.white }}
-    >
+    <KeyboardAwareScrollView style={{ flex: 1, backgroundColor: theme.colors.white }}>
       {errorMsg && (
         <View style={s.errorContainer}>
           <Text style={s.errorMsg}>{errorMsg}</Text>
@@ -86,8 +78,8 @@ const Register = () => {
                 name="username"
                 label="Username"
                 value={values.username}
-                onChangeText={handleChange("username")}
-                onBlur={handleBlur("username")}
+                onChangeText={handleChange('username')}
+                onBlur={handleBlur('username')}
                 containerStyle={s.input}
               />
 
@@ -95,23 +87,19 @@ const Register = () => {
                 name="email"
                 label="Email"
                 value={values.email}
-                onChangeText={handleChange("email")}
-                onBlur={handleBlur("email")}
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
                 containerStyle={s.input}
               />
               <InputField
                 name="password"
                 label="Password"
                 value={values.password}
-                onChangeText={handleChange("password")}
-                onBlur={handleBlur("password")}
+                onChangeText={handleChange('password')}
+                onBlur={handleBlur('password')}
                 containerStyle={s.input}
               />
-              <Button
-                mode="contained"
-                onPress={handleSubmit}
-                disabled={loading}
-              >
+              <Button mode="contained" onPress={handleSubmit} disabled={loading}>
                 Register
               </Button>
               {loading && <ActivityIndicator style={{ marginVertical: 10 }} />}
@@ -138,14 +126,14 @@ const s = StyleSheet.create({
     marginBottom: 20,
   },
   errorContainer: {
-    alignItems: "center",
+    alignItems: 'center',
     marginVertical: 15,
   },
   errorMsg: {
     color: theme.colors.error,
-    backgroundColor: "rgba(147,36,36,0.20)",
+    backgroundColor: 'rgba(147,36,36,0.20)',
     paddingVertical: 10,
     paddingHorizontal: 30,
-    textTransform: "capitalize",
+    textTransform: 'capitalize',
   },
 });

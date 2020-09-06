@@ -3,14 +3,15 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
 import { useTheme } from 'react-native-paper';
 
+import { useQuery } from '@apollo/client';
+import { IS_LOGGED_IN } from '@constants/queries';
+
 import { TabNavigator, Screens } from '@routeTypes';
 
 import HomeNavigator from './BottomTab/HomeNavigator';
 import ProfileNavigator from './BottomTab/ProfileNavigator';
 import SellNavigator from './BottomTab/SellNavigator';
 import SearchNavigator from './BottomTab/SearchNavigator';
-import { useQuery } from '@apollo/client';
-import { IS_LOGGED_IN } from '@constants/queries';
 
 const Tab = createBottomTabNavigator();
 
@@ -35,6 +36,7 @@ const RootNavigator = () => {
 
   const getRouteNameVisible = (route) => {
     const routeIndex = route.state ? route.state.index : null;
+
     if (!routeIndex) return true;
     const routeName = route.state.routes[routeIndex].name;
 
@@ -86,7 +88,6 @@ const RootNavigator = () => {
         name={TabNavigator.PROFILE_TAB}
         component={ProfileNavigator}
         options={({ route }) => {
-          console.log('***** Route ****** : ', route);
           return { tabBarLabel: 'Profile', tabBarVisible: getRouteNameVisible(route) };
         }}
         listeners={({ navigation }) => listenersTab(navigation, TabNavigator.PROFILE_TAB, Screens.PROFILE)}

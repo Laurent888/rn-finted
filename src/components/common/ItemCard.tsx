@@ -6,6 +6,7 @@ import { AntDesign as Icon } from '@expo/vector-icons';
 import { Screens } from '@routeTypes';
 import { ListingProp } from '@constants/types';
 
+import { defaultProfilePicUrl } from '../../lib/utils';
 import theme from '../../style/theme';
 import Price from './Price';
 import Box from './Box';
@@ -19,7 +20,7 @@ interface LeftContentProps {
 const LeftContent = ({ imageUrl }: LeftContentProps) => (
   <Avatar.Image
     source={{
-      uri: imageUrl,
+      uri: imageUrl || defaultProfilePicUrl,
     }}
     size={24}
     style={{ marginRight: 10 }}

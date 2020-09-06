@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { Avatar, Button } from 'react-native-paper';
 import { useQuery, useApolloClient } from '@apollo/client';
 import theme from '@theme';
 import { GET_ME, IS_LOGGED_IN, GET_CURRENT_USER } from '@constants/queries';
-import { useNavigation, CommonActions } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
-import { Screens, TabNavigator } from '@routeTypes';
+import { Screens } from '@routeTypes';
 import Box from '@components/common/Box';
-import ButtonWide from '../../components/common/ButtonWide';
-import LoadingIndicator from '../../components/common/LoadingIndicator';
-import Error from '../../components/common/Error';
+import ButtonWide from '../common/ButtonWide';
+import LoadingIndicator from '../common/LoadingIndicator';
+import Error from '../common/Error';
+import { defaultProfilePicUrl } from '../../lib/utils';
 
 const Profile = () => {
   console.log('In Profile screen');
@@ -55,7 +56,7 @@ const Profile = () => {
           <View style={s.avatar}>
             <Avatar.Image
               source={{
-                uri: me.userPicture,
+                uri: me.userPicture || defaultProfilePicUrl,
               }}
               size={45}
             />
