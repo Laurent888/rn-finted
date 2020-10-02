@@ -9,6 +9,7 @@ import { TabNavigator, Screens } from '@routeTypes';
 
 import Button from '../components/common/Button';
 import InputField from '../components/common/InputField';
+import { captureErrors } from 'lib/utils';
 
 const LoginScreen = ({ navigation }) => {
   useEffect(() => {
@@ -50,7 +51,9 @@ const LoginScreen = ({ navigation }) => {
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email address').required('This field is required'),
-    password: Yup.string().min(4, 'Must be 4 characters or more').required('This field is required'),
+    password: Yup.string()
+      .min(4, 'Must be 4 characters or more')
+      .required('This field is required'),
   });
 
   return (
@@ -64,9 +67,13 @@ const LoginScreen = ({ navigation }) => {
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={async (values) => {
-          await loginUser({
-            variables: { email: values.email, password: values.password },
-          });
+          try {
+            await loginUser({
+              variables: { email: values.email, password: values.password },
+            });
+          } catch (errorSubmit) {
+            captureErrors('Login user ', errorSubmit);
+          }
         }}
       >
         {({ handleChange, handleSubmit, values, handleBlur, errors, touched }) => {

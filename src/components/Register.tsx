@@ -12,6 +12,7 @@ import { CREATE_USER } from '@constants/queries';
 
 import InputField from './common/InputField';
 import Button from './common/Button';
+import { captureErrors } from 'lib/utils';
 
 const initialValues = {
   username: '',
@@ -37,9 +38,13 @@ const Register = () => {
       }, 4000);
     },
     onCompleted: async ({ createUser }) => {
-      await AsyncStorage.setItem('TOKEN', createUser);
+      try {
+        await AsyncStorage.setItem('TOKEN', createUser);
 
-      n.navigate(Screens.LOGIN);
+        n.navigate(Screens.LOGIN);
+      } catch (error) {
+        captureErrors('Register user', error);
+      }
     },
   });
 

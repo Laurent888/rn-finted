@@ -6,7 +6,7 @@ import { setContext } from '@apollo/link-context';
 import { AsyncStorage } from 'react-native';
 import { IS_LOGGED_IN, GET_CURRENT_USER } from '@constants/queries';
 
-import { logout } from './utils';
+import { captureErrors, logout } from './utils';
 
 const resetAuth = (cache) => {
   cache.writeQuery({
@@ -51,26 +51,30 @@ export const makeApolloClient = () => {
   });
 
   const authLink = setContext(async (_, { headers }) => {
-    const token = await AsyncStorage.getItem('TOKEN');
+    try {
+      const token = await AsyncStorage.getItem('TOKEN');
 
-    console.log('In auth link token:', token ? 'YES' : 'NO');
-    if (token) {
-      cache.writeQuery({
-        query: IS_LOGGED_IN,
-        data: {
-          isLoggedIn: true,
+      console.log('In auth link token:', token ? 'YES' : 'NO');
+      if (token) {
+        cache.writeQuery({
+          query: IS_LOGGED_IN,
+          data: {
+            isLoggedIn: true,
+          },
+        });
+      } else {
+        resetAuth(cache);
+      }
+
+      return {
+        headers: {
+          ...headers,
+          authorization: token ? `Bearer ${token}` : '',
         },
-      });
-    } else {
-      resetAuth(cache);
+      };
+    } catch (error) {
+      captureErrors('Apollo Authlink ', error);
     }
-
-    return {
-      headers: {
-        ...headers,
-        authorization: token ? `Bearer ${token}` : '',
-      },
-    };
   });
 
   const httpLink = new HttpLink({

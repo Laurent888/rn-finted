@@ -15,6 +15,7 @@ import ModalCategory from './ModalCategory';
 import AddImageModal from './AddImageModal';
 import ImagesPreviewSection from './ImagesPreviewSection';
 import LoadingIndicator from '../common/LoadingIndicator';
+import { captureErrors } from 'lib/utils';
 
 const maxImage = 3;
 
@@ -60,21 +61,25 @@ const Sell = () => {
           n.navigate('loginModal');
           return;
         }
-
-        await createListing({
-          variables: {
-            newListing: {
-              title: values.title,
-              description: values.description,
-              price: parseInt(values.price) as number,
-              images: values.images,
-              ownerId: userId,
-              owner: userId,
+        try {
+          await createListing({
+            variables: {
+              newListing: {
+                title: values.title,
+                description: values.description,
+                price: parseInt(values.price, 10) as number,
+                images: values.images,
+                ownerId: userId,
+                owner: userId,
+              },
             },
-          },
-        });
+          });
+          setImages([]);
+        } catch (error) {
+          captureErrors('Sell create listing ', error);
+        }
+
         setSubmitting(false);
-        setImages([]);
         resetForm();
       }}
     >
@@ -89,12 +94,20 @@ const Sell = () => {
         };
         return (
           <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
-            <AddImageModal isVisible={modalImage} onPress={addImage} onClose={() => setModalImage(false)} />
+            <AddImageModal
+              isVisible={modalImage}
+              onPress={addImage}
+              onClose={() => setModalImage(false)}
+            />
 
             <View style={s.container}>
               <View style={s.inputContainer}>
                 <Text style={s.label}>Images</Text>
-                <ImagesPreviewSection maxImages={maxImage} images={images} onPress={() => setModalImage(true)} />
+                <ImagesPreviewSection
+                  maxImages={maxImage}
+                  images={images}
+                  onPress={() => setModalImage(true)}
+                />
                 <Button onPress={() => setImages([])}>Delete</Button>
               </View>
               <View style={s.inputContainer}>
